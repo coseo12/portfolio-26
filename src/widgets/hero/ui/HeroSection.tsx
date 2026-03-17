@@ -19,6 +19,14 @@ function scrollToProjects() {
   }
 }
 
+/** #contact 섹션으로 부드럽게 스크롤 */
+function scrollToContact() {
+  const el = document.getElementById("contact");
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -66,7 +74,7 @@ export function HeroSection() {
         </p>
         <div className="flex gap-3">
           <Button onClick={scrollToProjects}>프로젝트 보기</Button>
-          <Button variant="outline">연락하기</Button>
+          <Button variant="outline" onClick={scrollToContact}>연락하기</Button>
         </div>
       </div>
 

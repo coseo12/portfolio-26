@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { id: "hero", label: "Hero" },
   { id: "about", label: "About Me" },
   { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
 ] as const;
 
 export function Header() {
