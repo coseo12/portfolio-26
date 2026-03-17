@@ -62,10 +62,7 @@ export function Header() {
         "bg-background/80 backdrop-blur-sm",
       )}
     >
-      <div className="flex h-full items-center justify-between px-6">
-        {/* 로고 */}
-        <span className="text-lg font-medium text-foreground">Portfolio</span>
-
+      <div className="flex h-full items-center justify-end px-6">
         {/* 내비게이션 메뉴 */}
         <nav className="flex items-center gap-6">
           {NAV_ITEMS.map(({ id, label }) => (

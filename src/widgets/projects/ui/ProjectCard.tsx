@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Github, ExternalLink } from "lucide-react";
 
 import type { Project } from "./ProjectsSection";
@@ -6,12 +7,53 @@ interface ProjectCardProps {
   project: Project;
 }
 
+/** 링크 렌더링 — 기본 콘텐츠와 오버레이에서 공용 사용 */
+function ProjectLinks({ project }: { project: Project }) {
+  if (!project.github && project.links.length === 0) return null;
+
+  return (
+    <div className="flex flex-wrap gap-3 border-t border-border pt-2">
+      {project.github && (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <Github className="size-4" /> GitHub
+        </a>
+      )}
+      {project.links.map((link) => (
+        <a
+          key={link.url}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ExternalLink className="size-4" /> {link.label}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card">
-      {/* 이미지 플레이스홀더 */}
+      {/* 이미지 영역 */}
       <div className="flex aspect-video items-center justify-center bg-secondary">
-        <span className="text-sm text-muted-foreground">프로젝트 이미지</span>
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={400}
+            height={225}
+            className="size-full object-cover"
+          />
+        ) : (
+          <span className="text-sm text-muted-foreground">프로젝트 이미지</span>
+        )}
       </div>
 
       {/* 기본 콘텐츠 */}
@@ -35,29 +77,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </div>
 
-        {/* 링크 */}
-        <div className="flex gap-3 border-t border-border pt-2">
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <Github className="size-4" /> GitHub
-            </a>
-          )}
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ExternalLink className="size-4" /> Live
-            </a>
-          )}
-        </div>
+        <ProjectLinks project={project} />
       </div>
 
       {/* 호버 오버레이 — 카드 전체를 불투명 배경으로 덮음 */}
@@ -82,29 +102,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             ))}
           </div>
 
-          {/* 링크 */}
-          <div className="flex gap-3 border-t border-border pt-2">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <Github className="size-4" /> GitHub
-              </a>
-            )}
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <ExternalLink className="size-4" /> Live
-              </a>
-            )}
-          </div>
+          <ProjectLinks project={project} />
         </div>
       </div>
     </div>

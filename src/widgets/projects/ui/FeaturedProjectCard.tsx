@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Github, ExternalLink } from "lucide-react";
 
 import type { Project } from "./ProjectsSection";
@@ -11,7 +12,17 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
     <div className="grid grid-cols-1 overflow-hidden rounded-lg border border-border bg-card lg:grid-cols-2">
       {/* 이미지 영역 */}
       <div className="flex aspect-video items-center justify-center bg-secondary lg:aspect-auto">
-        <span className="text-sm text-muted-foreground">프로젝트 이미지</span>
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={600}
+            height={400}
+            className="size-full object-cover"
+          />
+        ) : (
+          <span className="text-sm text-muted-foreground">프로젝트 이미지</span>
+        )}
       </div>
 
       {/* 텍스트 영역 */}
@@ -42,28 +53,31 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
           </div>
 
           {/* 링크 */}
-          <div className="flex gap-3 border-t border-border pt-3">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <Github className="size-4" /> GitHub
-              </a>
-            )}
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <ExternalLink className="size-4" /> Live
-              </a>
-            )}
-          </div>
+          {(project.github || project.links.length > 0) && (
+            <div className="flex flex-wrap gap-3 border-t border-border pt-3">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <Github className="size-4" /> GitHub
+                </a>
+              )}
+              {project.links.map((link) => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <ExternalLink className="size-4" /> {link.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

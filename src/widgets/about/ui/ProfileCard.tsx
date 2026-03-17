@@ -1,8 +1,15 @@
+import Image from "next/image";
+
 export function ProfileCard() {
   return (
     <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 text-center">
-      {/* 아바타 플레이스홀더 */}
-      <div className="size-24 rounded-full bg-muted" aria-hidden="true" />
+      <Image
+        src="/me.jpeg"
+        alt="서창오 프로필 사진"
+        width={96}
+        height={96}
+        className="size-24 rounded-full object-cover"
+      />
 
       <h3 className="text-lg font-medium text-foreground">서창오</h3>
       <p className="text-sm text-muted-foreground">Software Engineer</p>
