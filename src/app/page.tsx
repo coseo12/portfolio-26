@@ -1,7 +1,3 @@
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-3xl font-medium text-foreground">Portfolio</h1>
-    </div>
-  );
-}
+import { HomePage } from "@/views/home";
+
+export default HomePage;
