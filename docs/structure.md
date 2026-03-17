@@ -9,9 +9,9 @@ Feature-Sliced Design(FSD) 방법론을 기반으로 합니다. Next.js App Rout
 FSD는 6개의 레이어로 구성되며, **상위 레이어는 하위 레이어만 임포트할 수 있습니다.** 이 규칙이 FSD의 핵심입니다.
 
 ```
-app/        ← (Next.js 전용) 라우팅, 레이아웃
 src/
-  pages/    ← 5 페이지 조합 (라우트별 진입점)
+  app/      ← (Next.js 전용) 라우팅, 레이아웃
+  views/    ← 5 페이지 조합 (라우트별 진입점)
   widgets/  ← 4 독립적인 페이지 블록 (헤더, 사이드바)
   features/ ← 3 사용자 액션 단위 (로그인, 댓글 작성)
   entities/ ← 2 비즈니스 도메인 (User, Post, Order)
@@ -25,17 +25,17 @@ src/
 ## 디렉토리 레이아웃
 
 ```
-├── app/                          # Next.js App Router (라우팅 전용)
-│   ├── layout.tsx                # 루트 레이아웃
-│   ├── page.tsx                  # / → src/pages/home
-│   ├── (auth)/
-│   │   ├── login/page.tsx        # /login → src/pages/login
-│   │   └── register/page.tsx
-│   └── dashboard/
-│       └── page.tsx              # /dashboard → src/pages/dashboard
-│
 ├── src/
-│   ├── pages/                    # 레이어 5: 페이지 진입점
+│   ├── app/                      # Next.js App Router (라우팅 전용)
+│   │   ├── layout.tsx            # 루트 레이아웃
+│   │   ├── page.tsx              # / → src/views/home
+│   │   ├── (auth)/
+│   │   │   ├── login/page.tsx    # /login → src/views/login
+│   │   │   └── register/page.tsx
+│   │   └── dashboard/
+│   │       └── page.tsx          # /dashboard → src/views/dashboard
+│   │
+│   ├── views/                    # 레이어 5: 페이지 진입점
 │   │   ├── home/
 │   │   │   └── index.tsx
 │   │   ├── login/
@@ -88,6 +88,7 @@ src/
 │       ├── config/               # 환경 변수, 상수
 │       └── types/                # 공통 타입 (ApiResponse 등)
 │
+│
 ├── public/                       # 정적 파일
 └── docs/                         # 프로젝트 문서
 ```
@@ -134,7 +135,7 @@ import { Button } from "@/shared/ui/button";
 **레이어 간 임포트 방향 (위 → 아래만 허용)**
 
 ```
-pages    → widgets, features, entities, shared  ✅
+views    → widgets, features, entities, shared  ✅
 widgets  → features, entities, shared           ✅
 features → entities, shared                     ✅
 entities → shared                               ✅
@@ -148,19 +149,21 @@ shared   → entities                             ❌
 
 ---
 
-## app/ ↔ src/pages/ 연결 패턴
+## src/app/ ↔ src/views/ 연결 패턴
 
-Next.js `app/` 디렉토리의 `page.tsx`는 라우팅 역할만 하고, 실제 UI는 `src/pages/`에 위임합니다.
+Next.js `src/app/` 디렉토리의 `page.tsx`는 라우팅 역할만 하고, 실제 UI는 `src/views/`에 위임합니다.
+
+> **참고**: Next.js App Router가 `src/pages/`를 Pages Router로 인식하기 때문에, FSD의 pages 레이어를 `src/views/`로 사용합니다.
 
 ```tsx
-// app/dashboard/page.tsx
-import { DashboardPage } from "@/pages/dashboard";
+// src/app/dashboard/page.tsx
+import { DashboardPage } from "@/views/dashboard";
 
 export default DashboardPage;
 ```
 
 ```tsx
-// src/pages/dashboard/index.tsx
+// src/views/dashboard/index.tsx
 import { Header } from "@/widgets/header";
 import { Sidebar } from "@/widgets/sidebar";
 import { UserStats } from "@/features/user-settings";
