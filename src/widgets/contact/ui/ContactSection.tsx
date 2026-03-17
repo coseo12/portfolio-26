@@ -1,5 +1,4 @@
 import { ContactInfo } from "./ContactInfo";
-import { ContactForm } from "./ContactForm";
 
 export function ContactSection() {
   return (
@@ -21,10 +20,8 @@ export function ContactSection() {
           프로젝트 협업이나 채용에 관심이 있으시다면 편하게 연락 주세요.
         </p>
 
-        {/* 2컬럼: 연락처 + 폼 */}
-        <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="mt-12">
           <ContactInfo />
-          <ContactForm />
         </div>
 
         {/* 푸터 */}
