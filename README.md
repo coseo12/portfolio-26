@@ -56,6 +56,36 @@ pnpm test       # 테스트 실행
 pnpm lint       # 린트
 ```
 
+## 배포
+
+GitHub Pages로 호스팅되며, `main` 브랜치에 푸시하면 자동 배포됩니다.
+
+- **URL**: https://coseo12.github.io/portfolio-26/
+- **CI/CD**: GitHub Actions (`.github/workflows/deploy.yml`)
+- **빌드**: Next.js 정적 빌드 (`output: "export"`)
+
+### 배포 흐름
+
+```
+main 푸시 → GitHub Actions 트리거
+         → pnpm install → typecheck → build (정적 빌드)
+         → out/ 디렉토리를 GitHub Pages에 배포
+```
+
+### basePath 처리
+
+GitHub Pages는 서브 경로(`/portfolio-26/`)에 배포되므로, `GITHUB_PAGES` 환경변수로 `basePath`를 조건부 적용합니다. 로컬 개발에서는 basePath 없이 동작합니다.
+
+```ts
+// next.config.ts
+const isGithubPages = process.env.GITHUB_PAGES === "true";
+const basePath = isGithubPages ? "/portfolio-26" : "";
+```
+
+이미지 경로에는 `assetPath()` 유틸을 사용하여 basePath를 주입합니다.
+
+---
+
 ## 디자인 시스템
 
 - **테마**: Navy Blue 기반 커스텀 테마 (라이트/다크 모드)
