@@ -1,12 +1,8 @@
 import { Header } from "@/widgets/header";
+import { HeroSection } from "@/widgets/hero";
 
-/** 섹션 데이터 — 각 섹션의 ID, 배경색, 표시 텍스트 정의 */
+/** 임시 섹션 데이터 — Hero를 제외한 나머지 섹션 */
 const SECTIONS = [
-  {
-    id: "hero",
-    label: "Hero Section",
-    bg: "bg-rose-200 dark:bg-rose-900",
-  },
   {
     id: "about",
     label: "About Me Section",
@@ -24,6 +20,7 @@ export function HomePage() {
     <>
       <Header />
       <main>
+        <HeroSection />
         {SECTIONS.map(({ id, label, bg }) => (
           <section
             key={id}
