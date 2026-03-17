@@ -13,22 +13,22 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   {
     icon: Monitor,
     label: "Frontend",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    skills: ["TypeScript", "React", "Next.js", "Vue.js", "Tailwind CSS", "Electron"],
   },
   {
     icon: Database,
-    label: "State & Data",
-    skills: ["Zustand", "TanStack Query", "React Hook Form"],
+    label: "Backend / DB",
+    skills: ["Node.js", "Spring", "MySQL", "PostgreSQL", "MongoDB"],
   },
   {
     icon: Wrench,
-    label: "Tools",
-    skills: ["Git", "GitHub Actions", "Figma", "Storybook"],
+    label: "AI / Tools",
+    skills: ["LangChain", "OpenAI API", "OCR", "Git", "Turborepo", "Vite"],
   },
   {
     icon: Cloud,
-    label: "Infra",
-    skills: ["Vercel", "AWS (S3, CloudFront)", "Docker"],
+    label: "Infra / API",
+    skills: ["Docker", "WebRTC (Twilio)", "Canvas API", "WebGL", "Web Audio API"],
   },
 ];
 

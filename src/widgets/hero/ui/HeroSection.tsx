@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { ChevronDown } from "lucide-react";
 
@@ -19,8 +20,14 @@ function scrollToProjects() {
 }
 
 export function HeroSection() {
+  const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
-  const gradient = resolvedTheme === "dark" ? DARK_GRADIENT : LIGHT_GRADIENT;
+
+  useEffect(() => setMounted(true), []);
+
+  // SSR에서는 라이트 기본값 사용, 클라이언트 마운트 후 테마 반영
+  const gradient =
+    mounted && resolvedTheme === "dark" ? DARK_GRADIENT : LIGHT_GRADIENT;
 
   return (
     <section
@@ -48,13 +55,14 @@ export function HeroSection() {
           안녕하세요, 저는
         </p>
         <h1 className="text-4xl font-medium text-foreground md:text-5xl">
-          서코딩
+          서창오
         </h1>
         <p className="text-2xl font-medium text-primary md:text-3xl">
-          Frontend Developer
+          Software Engineer
         </p>
         <p className="max-w-md text-[15px] text-muted-foreground">
-          사용자 경험을 고민하고, 클린 코드를 추구하는 프론트엔드 개발자입니다.
+          7년차 소프트웨어 엔지니어로, React·Next.js·Vue.js 생태계에서 사용자
+          중심의 웹 애플리케이션을 만들고 있습니다.
         </p>
         <div className="flex gap-3">
           <Button onClick={scrollToProjects}>프로젝트 보기</Button>

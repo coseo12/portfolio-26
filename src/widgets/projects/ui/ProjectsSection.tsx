@@ -1,5 +1,3 @@
-import { Github, ExternalLink } from "lucide-react";
-
 import { FeaturedProjectCard } from "./FeaturedProjectCard";
 import { ProjectCard } from "./ProjectCard";
 
@@ -14,39 +12,39 @@ export interface Project {
 
 const PROJECTS: Project[] = [
   {
-    title: "E-Commerce 대시보드",
+    title: "Qpicker 관리자 페이지 · 큐피커 티켓",
     description:
-      "실시간 매출 데이터 시각화와 주문 관리 기능을 제공하는 어드민 대시보드. 복잡한 필터링과 차트 인터랙션을 최적화했습니다.",
-    techs: ["Next.js", "TypeScript", "Tailwind CSS", "Recharts", "Zustand"],
-    github: "#",
-    live: "#",
+      "인플루언서 마케팅 플랫폼의 관리자 대시보드와 티켓 시스템을 개발했습니다. Next.js 15 기반 Turborepo 모노레포 환경에서 Docker 컨테이너로 배포하며, 복잡한 데이터 필터링과 권한 관리 기능을 구현했습니다.",
+    techs: ["Next.js 15", "TypeScript", "Turborepo", "Docker", "Tailwind CSS"],
+    github: null,
+    live: null,
     featured: true,
   },
   {
-    title: "실시간 채팅 앱",
+    title: "Textscope — AI OCR 문서인식",
     description:
-      "WebSocket 기반 실시간 메시징 애플리케이션. 읽음 확인, 타이핑 인디케이터, 파일 전송을 지원합니다.",
-    techs: ["React", "Socket.io", "Express", "MongoDB"],
-    github: "#",
-    live: "#",
-    featured: false,
-  },
-  {
-    title: "블로그 플랫폼",
-    description:
-      "마크다운 에디터와 SSG를 활용한 개인 블로그. SEO 최적화와 다크모드를 지원합니다.",
-    techs: ["Next.js", "MDX", "Tailwind CSS", "Vercel"],
-    github: "#",
+      "AI 기반 문서인식 서비스의 프론트엔드를 담당했습니다. WebGL과 Canvas API를 활용하여 문서 이미지 위에 OCR 결과를 실시간 오버레이하고, 사용자가 인식 결과를 직접 수정할 수 있는 에디터를 구현했습니다.",
+    techs: ["Vue.js", "Vite", "WebGL", "Canvas API", "TypeScript"],
+    github: null,
     live: null,
     featured: false,
   },
   {
-    title: "할 일 관리 앱",
+    title: "Pivo — 화상 스트리밍 웹앱",
     description:
-      "드래그 앤 드롭 기반 칸반 보드. 로컬 스토리지 영속화와 PWA를 지원합니다.",
-    techs: ["React", "TypeScript", "dnd-kit", "Zustand"],
-    github: "#",
-    live: "#",
+      "WebRTC(Twilio) 기반 실시간 화상 통화 및 스트리밍 웹 애플리케이션을 개발했습니다. React.js와 Vue.js를 혼용하고, Electron으로 데스크탑 앱도 지원했습니다.",
+    techs: ["React.js", "Vue.js", "Electron", "WebRTC", "Twilio"],
+    github: null,
+    live: null,
+    featured: false,
+  },
+  {
+    title: "ESS 통합 모니터링 솔루션",
+    description:
+      "에너지저장장치(ESS)의 실시간 데이터를 시각화하는 모니터링 대시보드를 개발했습니다. PostgreSQL 기반 시계열 데이터를 차트로 렌더링하고 이상 감지 알림 기능을 구현했습니다.",
+    techs: ["Vue.js", "Spring", "PostgreSQL", "JSP"],
+    github: null,
+    live: null,
     featured: false,
   },
 ];
