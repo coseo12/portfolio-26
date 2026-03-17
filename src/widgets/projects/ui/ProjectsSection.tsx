@@ -1,3 +1,5 @@
+import { assetPath } from "@/shared/lib/utils";
+
 import { FeaturedProjectCard } from "./FeaturedProjectCard";
 import { ProjectCard } from "./ProjectCard";
 
@@ -27,7 +29,7 @@ const PROJECTS: Project[] = [
       { label: "Qpicker", url: "https://www.qpicker.com/" },
       { label: "Ticket", url: "https://ticket.qpicker.com/" },
     ],
-    image: "/projects/qpicker-ticket.png",
+    image: assetPath("/projects/qpicker-ticket.png"),
     featured: true,
   },
   {
@@ -39,7 +41,7 @@ const PROJECTS: Project[] = [
     links: [
       { label: "Textscope", url: "https://www.lomin.ai/textscope-studio" },
     ],
-    image: "/projects/textscope.png",
+    image: assetPath("/projects/textscope.png"),
     featured: false,
   },
   {
@@ -49,7 +51,7 @@ const PROJECTS: Project[] = [
     techs: ["React.js", "Vue.js", "Electron", "WebRTC", "Twilio"],
     github: null,
     links: [{ label: "Pivo", url: "https://pivo.kr/" }],
-    image: "/projects/pivo.png",
+    image: assetPath("/projects/pivo.png"),
     featured: false,
   },
   {
@@ -59,7 +61,7 @@ const PROJECTS: Project[] = [
     techs: ["Vue.js", "Spring", "PostgreSQL", "JSP"],
     github: null,
     links: [{ label: "Synerzen", url: "https://www.synerzen.co.kr/synerzen_main" }],
-    image: "/projects/ess.png",
+    image: assetPath("/projects/ess.png"),
     featured: false,
   },
 ];

@@ -1,10 +1,12 @@
 import Image from "next/image";
 
+import { assetPath } from "@/shared/lib/utils";
+
 export function ProfileCard() {
   return (
     <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 text-center">
       <Image
-        src="/me.jpeg"
+        src={assetPath("/me.jpeg")}
         alt="서창오 프로필 사진"
         width={96}
         height={96}
