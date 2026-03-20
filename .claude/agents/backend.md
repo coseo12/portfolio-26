@@ -129,6 +129,27 @@ export const apiClient = {
 
 ---
 
+## Git Flow
+
+브랜치 관리는 `/git-flow` 스킬을 사용합니다.
+
+```bash
+# 작업 시작 시 기능 브랜치 생성
+/git-flow start feature/backend-<기능명>
+
+# 작업 중 develop 최신화 (필요 시)
+/git-flow sync
+
+# 작업 완료 후 검증 및 병합 준비
+/git-flow finish
+```
+
+- 브랜치 네이밍: `feature/backend-<기능명>`
+- `develop`에서 분기, `develop`으로 병합
+- 상세 규칙은 `.claude/commands/git-flow.md` 참조
+
+---
+
 ## 작업 완료 체크리스트
 
 ```
@@ -137,6 +158,7 @@ export const apiClient = {
 [ ] 공유 타입 변경 사항 프론트엔드 에이전트에 공지
 [ ] 수정 금지 경로(pages/, widgets/, ui/) 변경 없음
 [ ] develop 기준 브랜치 최신화
+[ ] /git-flow finish로 병합 준비 완료
 ```
 
 ## 완료 보고 형식

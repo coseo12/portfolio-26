@@ -12,7 +12,7 @@ interface TimelineCardProps {
 
 export function TimelineCard({ heading, items }: TimelineCardProps) {
   return (
-    <div className="rounded-lg border border-border bg-card p-6">
+    <div className="rounded-lg border border-[--glass-border] bg-[--glass-bg] p-6 backdrop-blur-[var(--glass-blur)]">
       <h3 className="mb-4 text-lg font-medium text-foreground">{heading}</h3>
 
       <div className="space-y-4">

@@ -117,6 +117,7 @@ backend 에이전트로 API 타입과 Route Handler를 먼저 작성하고,
 | [docs/testing.md](docs/testing.md)                 | 테스트 작성 가이드 (Vitest)                |
 | [docs/principles.md](docs/principles.md)           | 개발 원칙 및 주의사항                      |
 | [docs/design-system.md](docs/design-system.md)     | 컬러, 타이포, 스페이싱, 컴포넌트 토큰      |
+| [docs/scroll-animation.md](docs/scroll-animation.md) | 스크롤 애니메이션 및 3D 배경 가이드       |
 | [docs/agents/frontend.md](docs/agents/frontend.md) | 프론트엔드 에이전트 가이드                 |
 | [docs/agents/backend.md](docs/agents/backend.md)   | 백엔드 에이전트 가이드                     |
 | [docs/agents/tester.md](docs/agents/tester.md)     | 테스터 에이전트 가이드                     |

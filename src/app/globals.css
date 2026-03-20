@@ -5,94 +5,69 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Primary — Navy Blue */
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(222 25% 12%);
+  /* ── Cosmic Abstract Design ── */
 
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(222 25% 12%);
+  /* Background — The Void (미세한 보라빛 다크) */
+  --background: #0A0A0C;
+  --foreground: #F8F9FA;
 
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(222 25% 12%);
+  /* Card — void-deep */
+  --card: #121217;
+  --card-foreground: #F8F9FA;
 
-  --primary: hsl(221 52% 40%);
-  --primary-foreground: hsl(0 0% 100%);
+  /* Popover */
+  --popover: #121217;
+  --popover-foreground: #F8F9FA;
 
-  --secondary: hsl(214 30% 95%);
-  --secondary-foreground: hsl(221 52% 25%);
+  /* Primary — nebula-cyan (링크, 활성 상태) */
+  --primary: #4DEEEA;
+  --primary-foreground: #0A0A0C;
 
-  --muted: hsl(220 14% 96%);
-  --muted-foreground: hsl(220 9% 46%);
+  /* Secondary — void-surface */
+  --secondary: #1E1E26;
+  --secondary-foreground: #E0E0E6;
 
-  --accent: hsl(204 57% 48%);
-  --accent-foreground: hsl(0 0% 100%);
+  /* Muted — 비활성 텍스트/배경 */
+  --muted: #1E1E26;
+  --muted-foreground: #6C757D;
 
-  --destructive: hsl(0 72% 58%);
+  /* Accent — nebula-violet */
+  --accent: #764BA2;
+  --accent-foreground: #F8F9FA;
 
-  --border: hsl(220 13% 88%);
-  --input: hsl(220 13% 88%);
-  --ring: hsl(221 52% 40%);
+  /* Destructive — nebula-amber 계열 */
+  --destructive: #FFB86C;
 
-  --radius: 0.5rem;
+  /* Border / Input / Ring */
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #4DEEEA;
 
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(222 25% 12%);
-  --sidebar-primary: hsl(221 52% 40%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(214 30% 95%);
-  --sidebar-accent-foreground: hsl(221 52% 25%);
-  --sidebar-border: hsl(220 13% 88%);
-  --sidebar-ring: hsl(221 52% 40%);
+  --radius: 0.75rem;
 
-  --chart-1: hsl(221 52% 40%);
-  --chart-2: hsl(204 57% 48%);
-  --chart-3: hsl(221 52% 55%);
-  --chart-4: hsl(204 50% 60%);
-  --chart-5: hsl(214 30% 70%);
-}
+  /* Glassmorphism — void-surface 기반 유리 효과 */
+  --glass-bg: rgba(30, 30, 38, 0.70);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-blur: 20px;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-.dark {
-  --background: hsl(222 25% 8%);
-  --foreground: hsl(210 20% 95%);
+  /* Sidebar */
+  --sidebar: #0A0A0C;
+  --sidebar-foreground: #F8F9FA;
+  --sidebar-primary: #4DEEEA;
+  --sidebar-primary-foreground: #0A0A0C;
+  --sidebar-accent: #1E1E26;
+  --sidebar-accent-foreground: #E0E0E6;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #4DEEEA;
 
-  --card: hsl(222 25% 10%);
-  --card-foreground: hsl(210 20% 95%);
-
-  --popover: hsl(222 25% 10%);
-  --popover-foreground: hsl(210 20% 95%);
-
-  --primary: hsl(221 70% 65%);
-  --primary-foreground: hsl(222 25% 8%);
-
-  --secondary: hsl(221 25% 18%);
-  --secondary-foreground: hsl(210 20% 85%);
-
-  --muted: hsl(222 20% 16%);
-  --muted-foreground: hsl(220 10% 55%);
-
-  --accent: hsl(204 50% 55%);
-  --accent-foreground: hsl(222 25% 8%);
-
-  --destructive: hsl(0 60% 50%);
-
-  --border: hsl(222 20% 20%);
-  --input: hsl(222 20% 20%);
-  --ring: hsl(221 70% 65%);
-
-  --sidebar: hsl(222 25% 10%);
-  --sidebar-foreground: hsl(210 20% 95%);
-  --sidebar-primary: hsl(221 70% 65%);
-  --sidebar-primary-foreground: hsl(222 25% 8%);
-  --sidebar-accent: hsl(221 25% 18%);
-  --sidebar-accent-foreground: hsl(210 20% 85%);
-  --sidebar-border: hsl(222 20% 20%);
-  --sidebar-ring: hsl(221 70% 65%);
-
-  --chart-1: hsl(221 70% 65%);
-  --chart-2: hsl(204 50% 55%);
-  --chart-3: hsl(221 60% 70%);
-  --chart-4: hsl(204 45% 65%);
-  --chart-5: hsl(214 25% 50%);
+  /* Chart — nebula 팔레트 */
+  --chart-1: #4DEEEA;
+  --chart-2: #764BA2;
+  --chart-3: #FFB86C;
+  --chart-4: #E0E0E6;
+  --chart-5: #6C757D;
 }
 
 @theme inline {
@@ -136,6 +111,10 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* 글래스모피즘 커스텀 컬러 */
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
 }
 
 @layer base {

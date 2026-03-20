@@ -4,7 +4,7 @@ import { assetPath } from "@/shared/lib/utils";
 
 export function ProfileCard() {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-card p-6 text-center">
+    <div className="flex flex-col items-center gap-3 rounded-lg border border-[--glass-border] bg-[--glass-bg] p-6 text-center backdrop-blur-[var(--glass-blur)]">
       <Image
         src={assetPath("/me.jpeg")}
         alt="서창오 프로필 사진"

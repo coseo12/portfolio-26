@@ -40,7 +40,7 @@ function ProjectLinks({ project }: { project: Project }) {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card">
+    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-[--glass-border] bg-[--glass-bg] backdrop-blur-[var(--glass-blur)] transition-transform duration-300 hover:-translate-y-1">
       {/* 이미지 영역 */}
       <div className="flex aspect-video items-center justify-center bg-secondary">
         {project.image ? (
@@ -81,7 +81,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* 호버 오버레이 — 카드 전체를 불투명 배경으로 덮음 */}
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end bg-card opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
+      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end bg-[--glass-bg] backdrop-blur-[var(--glass-blur)] opacity-0 transition-opacity duration-300 group-hover:pointer-events-auto group-hover:opacity-100">
         <div className="flex flex-col gap-3 overflow-y-auto p-4">
           <h3 className="text-lg font-medium text-foreground">
             {project.title}
