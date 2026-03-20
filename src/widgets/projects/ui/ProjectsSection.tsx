@@ -134,10 +134,10 @@ function ProjectCardItem({
     >
       <div
         className={cn(
-          "relative z-0 overflow-hidden rounded-lg border bg-[--glass-bg] backdrop-blur-[var(--glass-blur)] transition-all duration-300",
+          "relative z-0 overflow-hidden rounded-lg border transition-all duration-300",
           open ? "z-10 border-primary/30" : "border-[--glass-border]",
         )}
-        style={{ boxShadow: "var(--glass-shadow), var(--glass-highlight)" }}
+        style={{ backgroundColor: "var(--glass-bg)", boxShadow: "var(--glass-shadow), var(--glass-highlight)" }}
       >
         {/* 기본 상태 — 클릭으로 토글 */}
         <button
@@ -250,7 +250,7 @@ export function ProjectsSection() {
     >
       <div className="w-full will-change-[transform,opacity]">
         <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-24">
-          <div className="rounded-xl border border-[--glass-border] bg-[--glass-bg] p-6 backdrop-blur-[var(--glass-blur)]" style={{ boxShadow: "var(--glass-shadow), var(--glass-highlight)" }}>
+          <div className="rounded-xl border border-[--glass-border] p-6" style={{ backgroundColor: "var(--glass-bg)", boxShadow: "var(--glass-shadow), var(--glass-highlight)" }}>
             {/* 섹션 헤더 */}
             <div
               className="transition-all duration-700 ease-out"

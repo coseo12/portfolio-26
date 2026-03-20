@@ -20,7 +20,7 @@ export function ContactSection() {
     >
       <div className="w-full will-change-[transform,opacity]">
         <div className="mx-auto max-w-5xl px-6 md:px-12 lg:px-24">
-          <div className="rounded-xl border border-[--glass-border] bg-[--glass-bg] p-8 backdrop-blur-[var(--glass-blur)]" style={{ boxShadow: "var(--glass-shadow), var(--glass-highlight)" }}>
+          <div className="rounded-xl border border-[--glass-border] p-8" style={{ backgroundColor: "var(--glass-bg)", boxShadow: "var(--glass-shadow), var(--glass-highlight)" }}>
             {/* 섹션 헤더 */}
             <div
               className="transition-all duration-700 ease-out"

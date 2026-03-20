@@ -9,7 +9,7 @@ interface FeaturedProjectCardProps {
 
 export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
   return (
-    <div className="grid grid-cols-1 overflow-hidden rounded-lg border border-[--glass-border] bg-[--glass-bg] backdrop-blur-[var(--glass-blur)] transition-transform duration-300 hover:-translate-y-1 lg:grid-cols-2">
+    <div className="grid grid-cols-1 overflow-hidden rounded-lg border border-[--glass-border] transition-transform duration-300 hover:-translate-y-1 lg:grid-cols-2" style={{ backgroundColor: "var(--glass-bg)" }}>
       {/* 이미지 영역 */}
       <div className="flex aspect-video items-center justify-center bg-secondary lg:aspect-auto">
         {project.image ? (

@@ -38,7 +38,8 @@ export function SkillGrid() {
       {SKILL_CATEGORIES.map(({ icon: Icon, label, skills }) => (
         <div
           key={label}
-          className="rounded-lg border border-[--glass-border] bg-[--glass-bg] p-4 backdrop-blur-[var(--glass-blur)]"
+          className="rounded-lg border border-[--glass-border] p-4"
+          style={{ backgroundColor: "var(--glass-bg)" }}
         >
           <Icon className="size-5 text-primary" />
           <h4 className="mt-2 text-lg font-medium text-foreground">{label}</h4>

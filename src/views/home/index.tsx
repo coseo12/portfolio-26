@@ -6,6 +6,7 @@ import { AboutSection } from "@/widgets/about";
 import { ProjectsSection } from "@/widgets/projects";
 import { ContactSection } from "@/widgets/contact";
 import { ParticleNetwork } from "@/shared/ui/particle-network";
+import { WireframeGlobe } from "@/shared/ui/wireframe-globe";
 import { getSpacerHeightVh } from "@/shared/lib/hooks/useCrossfadeScroll";
 
 const TOTAL_SECTIONS = 4;
@@ -18,6 +19,13 @@ export function HomePage() {
       {/* 3D 파티클 네트워크 배경 — 전체 화면 고정 */}
       <div className="fixed inset-0 z-0">
         <ParticleNetwork />
+      </div>
+
+      {/* 와이어프레임 글로브 — 중앙 고정 */}
+      <div className="pointer-events-none fixed inset-0 z-[1] flex items-center justify-center">
+        <div className="h-[550px] w-[550px] opacity-95">
+          <WireframeGlobe />
+        </div>
       </div>
 
       <Header />

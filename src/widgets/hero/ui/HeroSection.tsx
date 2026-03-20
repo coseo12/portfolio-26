@@ -28,24 +28,27 @@ export function HeroSection() {
       className="fixed inset-0 z-[11] flex items-center"
       style={style}
     >
-      <div className="w-full will-change-[transform,opacity]">
-        <div className="relative z-10 flex max-w-2xl flex-col items-start gap-4 px-6 pt-16 md:px-12 lg:px-24">
-          <p className="text-sm uppercase tracking-wide text-muted-foreground">
-            안녕하세요, 저는
-          </p>
-          <h1 className="text-4xl font-medium text-foreground md:text-5xl">
-            서창오
-          </h1>
-          <p className="text-2xl font-medium text-primary md:text-3xl">
-            Software Engineer
-          </p>
-          <p className="max-w-md text-[15px] text-muted-foreground">
-            웹 프론트엔드부터 AI Agent 설계까지, 사용자 중심의
-            제품을 만드는 소프트웨어 엔지니어입니다.
-          </p>
-          <div className="flex gap-3">
-            <Button onClick={scrollToProjects}>프로젝트 보기</Button>
-            <Button variant="outline" onClick={scrollToContact}>연락하기</Button>
+      <div className="relative w-full will-change-[transform,opacity]">
+        {/* 텍스트 — 글로브 위에 중앙 배치 */}
+        <div className="relative z-10 flex w-full items-center justify-center px-6 pt-16 md:px-12 lg:px-24">
+          <div className="flex max-w-lg flex-col items-center gap-4 text-center">
+            <p className="text-sm uppercase tracking-wide text-muted-foreground">
+              안녕하세요, 저는
+            </p>
+            <h1 className="text-4xl font-medium text-foreground md:text-5xl">
+              서창오
+            </h1>
+            <p className="text-2xl font-medium text-primary md:text-3xl">
+              Software Engineer
+            </p>
+            <p className="max-w-md text-[15px] text-muted-foreground">
+              웹 프론트엔드부터 AI Agent 설계까지, 사용자 중심의
+              제품을 만드는 소프트웨어 엔지니어입니다.
+            </p>
+            <div className="flex gap-3">
+              <Button onClick={scrollToProjects}>프로젝트 보기</Button>
+              <Button variant="outline" onClick={scrollToContact}>연락하기</Button>
+            </div>
           </div>
         </div>
       </div>

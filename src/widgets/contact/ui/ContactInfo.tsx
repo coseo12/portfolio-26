@@ -37,7 +37,7 @@ const CONTACT_ITEMS: ContactItem[] = [
 
 export function ContactInfo() {
   return (
-    <div className="rounded-lg border border-[--glass-border] bg-[--glass-bg] p-6 backdrop-blur-[var(--glass-blur)]">
+    <div className="rounded-lg border border-[--glass-border] p-6" style={{ backgroundColor: "var(--glass-bg)" }}>
       <div className="space-y-4">
         {CONTACT_ITEMS.map((item) => (
           <div key={item.label} className="flex items-center gap-3">
