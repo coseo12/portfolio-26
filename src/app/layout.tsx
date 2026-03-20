@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
+import { assetPath } from "@/shared/lib/utils";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description: "Portfolio",
   icons: {
-    icon: "/banana.png",
+    icon: assetPath("/banana.png"),
   },
 };
 
