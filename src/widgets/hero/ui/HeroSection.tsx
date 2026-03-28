@@ -1,27 +1,71 @@
 "use client";
 
+import { useRef, useEffect, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
 import { SITE_CONFIG, BASE_PATH } from "@/shared/config";
 import { GoldParticles } from "@/shared/ui/gold-particles";
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number>(0);
+
   const handleCtaClick = () => {
     const target = document.getElementById("projects");
     target?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const updateVideoTime = useCallback(() => {
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section || !video.duration) return;
+
+    const rect = section.getBoundingClientRect();
+    const sectionHeight = rect.height;
+    // 스크롤 진행률: 0(맨 위) → 1(Hero 벗어남)
+    const progress = Math.min(
+      Math.max(-rect.top / sectionHeight, 0),
+      1
+    );
+    video.currentTime = progress * video.duration;
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // 비디오 메타데이터 로드 후 첫 프레임 표시
+    const handleLoaded = () => {
+      video.currentTime = 0;
+    };
+    video.addEventListener("loadedmetadata", handleLoaded);
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(updateVideoTime);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoaded);
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [updateVideoTime]);
+
   return (
     <section
+      ref={sectionRef}
       className="relative flex h-screen items-center justify-center overflow-hidden"
       aria-label="Hero"
     >
-      {/* L1: 배경 비디오 */}
+      {/* L1: 스크롤 연동 배경 비디오 */}
       <div className="absolute inset-0 z-0">
         <video
-          autoPlay
+          ref={videoRef}
           muted
-          loop
           playsInline
+          preload="auto"
           poster={`${BASE_PATH}/hero-bg.webp`}
           className="h-full w-full object-cover xl:blur-[1px] 2xl:blur-[2px]"
           aria-hidden="true"
