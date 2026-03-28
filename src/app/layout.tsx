@@ -38,9 +38,9 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "서창오 | AI-Augmented Developer",
+  title: "서창오 | Frontend & AI Engineer",
   description:
-    "11년차 개발자 서창오의 포트폴리오. AI 에이전트와 프론트엔드 전문성을 결합합니다.",
+    "개발자 서창오의 포트폴리오. 프론트엔드 전문성에 AI 워크플로우를 결합합니다.",
   keywords: [
     "프론트엔드",
     "개발자",
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "서창오" }],
   openGraph: {
-    title: "서창오 | AI-Augmented Developer",
-    description: "11년차 개발자 서창오의 포트폴리오",
+    title: "서창오 | Frontend & AI Engineer",
+    description: "개발자 서창오의 포트폴리오",
     type: "website",
   },
 };

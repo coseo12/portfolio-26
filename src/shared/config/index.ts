@@ -6,9 +6,9 @@ export const BASE_PATH =
 
 export const SITE_CONFIG = {
   name: "서창오",
-  title: "AI-Augmented Developer",
+  title: "Frontend & AI Engineer",
   description:
-    "AI 에이전트의 속도에 11년차의 디테일을 더합니다",
+    "프론트엔드 전문성에 AI 워크플로우를 결합하여 제품의 한계를 넓힙니다",
   email: "momo_12@naver.com",
   github: "https://github.com/coseo12",
   location: "서울 광진구",
@@ -142,7 +142,7 @@ export const ABOUT_HIGHLIGHTS = [
   {
     title: "견고한 설계",
     description:
-      "11년의 실무 경험은 AI가 생성한 코드를 비판적으로 검증하는 강력한 기반입니다. 빠른 구현 속에서도 성능, 접근성, 최적의 UX라는 본질을 놓치지 않습니다.",
+      "풍부한 실무 경험은 AI가 생성한 코드를 비판적으로 검증하는 강력한 기반입니다. 빠른 구현 속에서도 성능, 접근성, 최적의 UX라는 본질을 놓치지 않습니다.",
   },
   {
     title: "에이전틱 아키텍처",
