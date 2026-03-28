@@ -72,7 +72,7 @@ export function Header() {
 
       {/* 모바일 전체화면 오버레이 */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-ink-900/95 md:hidden">
+        <div role="dialog" aria-label="메뉴" className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-ink-900/95 md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(false)}
             className="absolute right-6 top-6 text-moon"

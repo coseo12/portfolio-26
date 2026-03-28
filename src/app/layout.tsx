@@ -10,9 +10,10 @@ import "./globals.css";
 
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["700"],
   variable: "--font-noto-serif-kr",
   display: "swap",
+  preload: true,
 });
 
 const playfairDisplay = Playfair_Display({

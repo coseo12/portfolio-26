@@ -83,6 +83,7 @@ export function ContactSection() {
                   href={item.href}
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
+                  aria-label={item.external ? `${item.label} (새 탭에서 열기)` : item.label}
                   className="glass-card px-6 py-4 rounded-lg flex items-center gap-3 hover:text-gold-400 transition"
                 >
                   {content}
