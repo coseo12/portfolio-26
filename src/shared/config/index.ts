@@ -59,6 +59,18 @@ export const CAREER_TIMELINE = [
     role: "전임연구원",
     description: "ESS 통합 모니터링 — 실시간 데이터 시각화",
   },
+  {
+    period: "2014.11 – 2016.11",
+    company: "(주)에너젠",
+    role: "전기제어 대리",
+    description: "디젤비상발전기 시운전 및 QA/QC",
+  },
+  {
+    period: "2010.07 – 2013.09",
+    company: "LG디스플레이",
+    role: "P8E 사원",
+    description: "생산 이력 관리 및 패널 적재 장비 제어",
+  },
 ] as const;
 
 export const SKILLS = {

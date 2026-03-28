@@ -32,7 +32,6 @@ export function AboutSection() {
             <div className="text-center lg:text-left">
               <h3 className="text-2xl font-heading text-moon">{SITE_CONFIG.name}</h3>
               <p className="text-gold-400">{SITE_CONFIG.title}</p>
-              <p className="text-moon/60">시니어 엔지니어</p>
             </div>
 
             <div className="flex w-full flex-col gap-3">
