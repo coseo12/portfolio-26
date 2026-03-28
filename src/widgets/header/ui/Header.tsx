@@ -1,115 +1,96 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
-
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
-import { getSectionScrollTarget } from "@/shared/lib/hooks/useCrossfadeScroll";
-
-/** 섹션 ID와 메뉴 표시명 매핑 */
-const NAV_ITEMS = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
-] as const;
-
-/** 크로스페이드 훅과 동일한 stride 상수 */
-const STRIDE_RATIO = 0.45;
-
-/** scrollY 기반으로 현재 활성 섹션 ID를 계산 */
-function calcActiveSection(): string {
-  if (typeof window === "undefined") return NAV_ITEMS[0].id;
-  const vh = window.innerHeight;
-  const stride = vh * STRIDE_RATIO;
-  const currentScrollY = window.scrollY;
-
-  for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
-    const sectionStart = i * stride;
-    if (currentScrollY >= sectionStart - vh * 0.1) {
-      return NAV_ITEMS[i].id;
-    }
-  }
-  return NAV_ITEMS[0].id;
-}
+import { NAV_ITEMS } from "@/shared/config";
+import { useScrollPosition } from "@/shared/lib/hooks/useScrollPosition";
+import { useActiveSection } from "@/shared/lib/hooks/useActiveSection";
 
 export function Header() {
-  // SSR과 동일한 초기값으로 hydration mismatch 방지
-  const [activeSection, setActiveSection] = useState<string>("hero");
-  const rafId = useRef<number>(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const scrollY = useScrollPosition();
+  const activeSection = useActiveSection();
 
-  useEffect(() => {
-    // 마운트 직후 실제 스크롤 위치로 동기화
-    setActiveSection(calcActiveSection());
+  const isScrolled = scrollY > 50;
 
-    const handleScroll = () => {
-      if (rafId.current) return;
-      rafId.current = requestAnimationFrame(() => {
-        setActiveSection(calcActiveSection());
-        rafId.current = 0;
-      });
-    };
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current);
-      }
-    };
-  }, []);
-
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, sectionIndex: number) => {
-      e.preventDefault();
-      window.scrollTo({
-        top: getSectionScrollTarget(sectionIndex),
-        behavior: "smooth",
-      });
-    },
-    [],
-  );
+  const handleNavClick = (href: string) => {
+    setIsMobileMenuOpen(false);
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <nav
+    <header
       className={cn(
-        "fixed z-50",
-        // 모바일: 하단 중앙 가로 배치
-        "bottom-4 left-1/2 -translate-x-1/2 flex-row gap-6",
-        // 데스크탑: 우측 가장자리 세로 배치
-        "sm:bottom-auto sm:left-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-0 sm:flex-col sm:gap-4",
-        "flex items-center sm:items-end",
+        "fixed top-0 z-50 w-full transition-all duration-300",
+        isScrolled ? "bg-ink-900/80 backdrop-blur-md" : "bg-transparent"
       )}
     >
-      {NAV_ITEMS.map(({ id, label }, index) => (
-        <a
-          key={id}
-          href={`#${id}`}
-          onClick={(e) => handleNavClick(e, index)}
-          className="group relative flex items-center justify-center"
-          aria-label={label}
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        {/* 로고 */}
+        <button
+          onClick={scrollToTop}
+          className="flex h-10 w-10 items-center justify-center border border-gold-500 font-serif text-gold-500 transition-colors hover:bg-gold-500/10"
+          aria-label="맨 위로 이동"
         >
-          {/* 도트 인디케이터 */}
-          <span
-            className={cn(
-              "block rounded-full transition-all duration-300",
-              activeSection === id
-                ? "h-3 w-3 bg-primary shadow-[0_0_10px_rgba(77,238,234,0.6)]"
-                : "h-2 w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground",
-            )}
-          />
+          CO
+        </button>
 
-          {/* 툴팁 — 데스크탑: 좌측, 모바일: 숨김 */}
-          <span
-            className={cn(
-              "pointer-events-none absolute right-full mr-4 hidden whitespace-nowrap rounded-full px-3 py-1 text-[10px] font-medium uppercase tracking-wider sm:block",
-              "border border-primary/30 bg-primary/15 text-primary backdrop-blur-md",
-              "translate-x-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100",
-            )}
+        {/* 데스크톱 네비게이션 */}
+        <ul className="hidden gap-8 md:flex">
+          {NAV_ITEMS.map((item) => (
+            <li key={item.href}>
+              <button
+                onClick={() => handleNavClick(item.href)}
+                className={cn(
+                  "pb-1 text-sm transition-colors",
+                  activeSection === item.href
+                    ? "border-b-2 border-gold-500 text-gold-400"
+                    : "text-moon/70 hover:text-gold-400"
+                )}
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {/* 모바일 햄버거 버튼 */}
+        <button
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="text-moon md:hidden"
+          aria-label="메뉴 열기"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+      </nav>
+
+      {/* 모바일 전체화면 오버레이 */}
+      {isMobileMenuOpen && (
+        <div role="dialog" aria-label="메뉴" className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 bg-ink-900/95 md:hidden">
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute right-6 top-6 text-moon"
+            aria-label="메뉴 닫기"
           >
-            {label}
-          </span>
-        </a>
-      ))}
-    </nav>
+            <X className="h-6 w-6" />
+          </button>
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.href}
+              onClick={() => handleNavClick(item.href)}
+              className="text-2xl text-moon transition-colors hover:text-gold-400"
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </header>
   );
 }

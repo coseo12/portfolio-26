@@ -1,67 +1,122 @@
 "use client";
 
+import { useRef, useEffect, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
-
-import { Button } from "@/shared/ui/button";
-import { useCrossfadeScroll, getSectionScrollTarget } from "@/shared/lib/hooks/useCrossfadeScroll";
-import { cn } from "@/shared/lib/utils";
-
-/** #projects 섹션으로 부드럽게 스크롤 */
-function scrollToProjects() {
-  window.scrollTo({ top: getSectionScrollTarget(2), behavior: "smooth" });
-}
-
-/** #contact 섹션으로 부드럽게 스크롤 */
-function scrollToContact() {
-  window.scrollTo({ top: getSectionScrollTarget(3), behavior: "smooth" });
-}
+import { SITE_CONFIG, BASE_PATH } from "@/shared/config";
+import { GoldParticles } from "@/shared/ui/gold-particles";
 
 export function HeroSection() {
-  const { style, scrollY } = useCrossfadeScroll(0, 4);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number>(0);
 
-  // 스크롤 인디케이터: 스크롤이 거의 없을 때만 표시
-  const showIndicator = scrollY < 50;
+  const handleCtaClick = () => {
+    const target = document.getElementById("projects");
+    target?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const updateVideoTime = useCallback(() => {
+    const video = videoRef.current;
+    const section = sectionRef.current;
+    if (!video || !section || !video.duration) return;
+
+    const rect = section.getBoundingClientRect();
+    const sectionHeight = rect.height;
+    // 스크롤 진행률: 0(맨 위) → 1(Hero 벗어남)
+    const progress = Math.min(
+      Math.max(-rect.top / sectionHeight, 0),
+      1
+    );
+    video.currentTime = progress * video.duration;
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // 비디오 메타데이터 로드 후 첫 프레임 표시
+    const handleLoaded = () => {
+      video.currentTime = 0;
+    };
+    video.addEventListener("loadedmetadata", handleLoaded);
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(updateVideoTime);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoaded);
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [updateVideoTime]);
 
   return (
-    <div
-      id="hero"
-      className="fixed inset-0 z-[11] flex items-center"
-      style={style}
+    <section
+      ref={sectionRef}
+      className="relative flex h-screen items-center justify-center overflow-hidden"
+      aria-label="Hero"
     >
-      <div className="relative w-full will-change-[transform,opacity]">
-        {/* 텍스트 — 글로브 위에 중앙 배치 */}
-        <div className="relative z-10 flex w-full items-center justify-center px-6 pt-16 md:px-12 lg:px-24">
-          <div className="flex max-w-lg flex-col items-center gap-4 text-center">
-            <p className="text-sm uppercase tracking-wide text-muted-foreground">
-              안녕하세요, 저는
-            </p>
-            <h1 className="text-4xl font-medium text-foreground md:text-5xl">
-              서창오
-            </h1>
-            <p className="text-2xl font-medium text-primary md:text-3xl">
-              Software Engineer
-            </p>
-            <p className="max-w-md text-[15px] text-muted-foreground">
-              웹 프론트엔드부터 AI Agent 설계까지, 사용자 중심의
-              제품을 만드는 소프트웨어 엔지니어입니다.
-            </p>
-            <div className="flex gap-3">
-              <Button onClick={scrollToProjects}>프로젝트 보기</Button>
-              <Button variant="outline" onClick={scrollToContact}>연락하기</Button>
-            </div>
-          </div>
-        </div>
+      {/* L1: 스크롤 연동 배경 비디오 */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef}
+          muted
+          playsInline
+          preload="auto"
+          poster={`${BASE_PATH}/hero-bg.webp`}
+          className="h-full w-full object-cover xl:blur-[1px] 2xl:blur-[2px]"
+          aria-hidden="true"
+        >
+          <source src={`${BASE_PATH}/hero.mp4`} type="video/mp4" />
+        </video>
+        {/* 오버레이: 중앙 반투명 + 가장자리 비네팅 */}
+        <div className="absolute inset-0 bg-ink-900/40" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 30%, rgba(10,14,23,0.5) 70%, rgba(10,14,23,0.85) 100%)",
+          }}
+        />
       </div>
 
-      {/* 스크롤 인디케이터 */}
+      {/* L2: 금빛 파티클 */}
+      <GoldParticles />
+
+      {/* 중앙 텍스트 — 반투명 백드롭으로 가독성 확보 */}
       <div
-        className={cn(
-          "absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-500",
-          showIndicator ? "opacity-50" : "opacity-0 pointer-events-none",
-        )}
+        className="relative z-30 flex flex-col items-center gap-4 rounded-3xl px-10 py-8 text-center md:px-16 md:py-10"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(10,14,23,0.6) 0%, rgba(10,14,23,0.3) 60%, transparent 100%)",
+        }}
       >
-        <ChevronDown className="size-6 animate-bounce text-muted-foreground" />
+        <h1 className="font-serif text-gold-gradient text-3xl font-bold leading-tight pb-1 md:text-5xl">
+          {SITE_CONFIG.title}
+        </h1>
+        <p className="max-w-lg text-base text-gold-gradient md:text-lg">
+          {SITE_CONFIG.description}
+        </p>
+        <button
+          onClick={handleCtaClick}
+          className="mt-4 cursor-pointer rounded-lg border border-gold-500 bg-ink-900/60 px-8 py-3 text-sm font-medium text-gold-400 transition-all duration-300 hover:glow-gold hover:bg-gold-500/10"
+        >
+          프로젝트 보기
+        </button>
       </div>
-    </div>
+
+      {/* 스크롤 힌트 */}
+      <div className="absolute bottom-8 left-1/2 z-30 -translate-x-1/2">
+        <ChevronDown
+          className="h-8 w-8 animate-bounce text-moon/60"
+          aria-hidden="true"
+        />
+      </div>
+
+      {/* 하단 그라디언트 — 다음 섹션과 자연스럽게 연결 */}
+      <div className="ink-fade-bottom absolute bottom-0 left-0 z-20 h-32 w-full" />
+    </section>
   );
 }

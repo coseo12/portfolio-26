@@ -1,132 +1,136 @@
-# CLAUDE.md
+# Harness Engineering Framework
 
-이 파일은 Claude Code가 이 저장소에서 작업할 때 참조하는 프로젝트 가이드입니다.
-
----
-
-## 프로젝트 개요
-
-- **타입**: 프론트엔드 앱
-- **프레임워크**: Next.js (App Router)
-- **언어**: TypeScript
-- **패키지 매니저**: pnpm
-- **스타일링**: Tailwind CSS
-- **테스트**: Vitest
+## 개요
+이 저장소는 AI 에이전트 기반 자동화 개발 프레임워크의 템플릿이다.
+새 프로젝트 시작 시 이 템플릿을 복사하여 사용한다.
 
 ---
 
-## 빠른 시작
+## 에이전트 역할 체계
 
-```bash
-pnpm install   # 의존성 설치
-pnpm dev       # 개발 서버
-pnpm build     # 프로덕션 빌드
-pnpm test      # 테스트 실행
-pnpm lint      # 린트
-pnpm typecheck # 타입 체크
-```
-
----
-
-## 서브 에이전트 구성
-
-이 프로젝트는 3개의 서브 에이전트가 병렬로 작업합니다. 에이전트 정의 파일은 `.claude/agents/`에 위치하며, Claude Code가 작업 성격에 따라 자동으로 적절한 에이전트에 위임합니다.
-
-```
-.claude/agents/
-  frontend.md   ← UI, 컴포넌트, 페이지, 클라이언트 상태
-  backend.md    ← Route Handler, API 로직, 공유 타입 정의
-  tester.md     ← 단위/통합 테스트, 목(mock) 관리
-```
-
-### 병렬 작업 흐름
-
-```
-오케스트레이터
-├── [즉시 시작] backend  → src/shared/types/ 타입 먼저 확정
-├── [타입 확정 후] frontend → UI 구현 (backend와 병렬 가능)
-└── [양쪽 완료 후] tester → 테스트 작성
-```
-
-### 오케스트레이터 프롬프트 예시
-
-```
-로그인 기능을 구현해줘.
-backend 에이전트로 API 타입과 Route Handler를 먼저 작성하고,
-타입이 확정되면 frontend 에이전트와 병렬로 진행해.
-각 에이전트 완료 후 tester 에이전트로 테스트를 작성해.
-```
-
-### 작업 라우팅 결정 기준
-
-요청이 들어오면 아래 순서로 판단합니다.
-
-```
-1. 오케스트레이터가 직접 처리할 작업인가?  → 직접 처리
-2. 단일 에이전트로 충분한가?               → 해당 에이전트에 위임
-3. 여러 도메인에 걸쳐 있는가?              → 병렬 또는 순차 위임
-```
-
-**오케스트레이터가 직접 처리하는 작업**
-
-에이전트를 거치지 않고 오케스트레이터가 직접 수행합니다.
-
-| 작업 유형          | 예시                                                                  |
-| ------------------ | --------------------------------------------------------------------- |
-| 문서 작성 및 수정  | `docs/**`, `CLAUDE.md`, `README.md`                                   |
-| 설정 파일 변경     | `tsconfig.json`, `tailwind.config.ts`, `package.json`, `.env.example` |
-| 프로젝트 초기 세팅 | 의존성 설치, 폴더 구조 생성, 스캐폴딩                                 |
-| 코드 검색 및 분석  | 특정 패턴 탐색, 의존성 파악, 구조 파악                                |
-| Git 작업           | 브랜치 생성, 커밋, 머지, 충돌 해결                                    |
-| 에이전트 간 조율   | 완료 보고 수신, 다음 단계 결정, 버그 재할당                           |
-| 빠른 단순 수정     | 오타 수정, 상수 값 변경, 주석 추가                                    |
-
-**단일 에이전트 위임**
-
-요청이 한 도메인에만 해당할 때:
-
-```
-"UserCard 컴포넌트 만들어줘"          → frontend 에이전트
-"/api/users 엔드포인트 추가해줘"      → backend 에이전트
-"useAuth 훅 테스트 작성해줘"          → tester 에이전트
-```
-
-**병렬 실행** — 아래 조건을 모두 충족할 때:
-
-- 작업 도메인이 독립적 (프론트/백엔드/테스트)
-- 공유 파일(`src/shared/types/`)에 경쟁 쓰기 없음
-- 각 에이전트의 완료 조건이 명확
-
-**순차 실행** — 아래 조건 중 하나라도 해당할 때:
-
-- 타입 정의 미확정 상태에서 UI 구현 불필요
-- 구현 미완료 코드의 테스트 작성
-- 공유 경로(`src/shared/types/`)를 동시 수정하는 경우
+| 역할 | 파일 | 책임 |
+|------|------|------|
+| Orchestrator | `.claude/agents/orchestrator.md` | 전체 워크플로우 조율, 에이전트 간 동기화, 교착 감지 |
+| Planner | `.claude/agents/planner.md` | 주제/스펙 → 기획서 작성, 요구사항 보충 |
+| PM | `.claude/agents/pm.md` | 요구사항 분석, 이슈 분해, 우선순위 결정 |
+| Architect | `.claude/agents/architect.md` | 기술 설계, 구조 결정, 인터페이스 정의, 테스트 시나리오 |
+| Frontend Developer | `.claude/agents/frontend-developer.md` | UI 구현, 컴포넌트, 스타일, 접근성 |
+| Backend Developer | `.claude/agents/backend-developer.md` | API 구현, DB, 비즈니스 로직, 인프라 |
+| Developer (Fullstack) | `.claude/agents/developer.md` | 풀스택 구현 (scope:fullstack 이슈) |
+| Evaluator | `.claude/agents/evaluator.md` | 정적 분석 + 코드 리뷰 + 품질 검증, 승인/반려 |
+| QA | `.claude/agents/qa.md` | 테스트 작성, 실행, E2E 듀얼 뷰포트 검증 |
 
 ---
 
-## 문서 목록
+## 전역 규칙
 
-세부 내용은 아래 문서를 참조하세요.
+### 브랜치 전략
+- `main`: 안정 브랜치, 직접 푸시 금지
+- `develop`: 통합 브랜치, PR을 통해서만 머지
+- `feature/<이슈번호>-<설명>`: 기능 브랜치
+- `fix/<이슈번호>-<설명>`: 버그 수정 브랜치
 
-| 문서                                               | 내용                                       |
-| -------------------------------------------------- | ------------------------------------------ |
-| [docs/structure.md](docs/structure.md)             | 폴더 구조 및 파일 네이밍 규칙              |
-| [docs/conventions.md](docs/conventions.md)         | 코드 컨벤션 (TypeScript, 컴포넌트, 임포트) |
-| [docs/styling.md](docs/styling.md)                 | Tailwind CSS 사용 규칙                     |
-| [docs/testing.md](docs/testing.md)                 | 테스트 작성 가이드 (Vitest)                |
-| [docs/principles.md](docs/principles.md)           | 개발 원칙 및 주의사항                      |
-| [docs/design-system.md](docs/design-system.md)     | 컬러, 타이포, 스페이싱, 컴포넌트 토큰      |
-| [docs/scroll-animation.md](docs/scroll-animation.md) | 스크롤 애니메이션 및 3D 배경 가이드       |
-| [docs/agents/frontend.md](docs/agents/frontend.md) | 프론트엔드 에이전트 가이드                 |
-| [docs/agents/backend.md](docs/agents/backend.md)   | 백엔드 에이전트 가이드                     |
-| [docs/agents/tester.md](docs/agents/tester.md)     | 테스터 에이전트 가이드                     |
+### 커밋 컨벤션
+```
+<type>(<scope>): <description>
 
----
+[body]
 
-## 핵심 원칙 (요약)
+[footer]
+```
+- type: feat, fix, refactor, test, docs, chore
+- scope: 변경 대상 모듈/컴포넌트
+- description: 변경 사항 요약 (한국어 가능)
 
-1. `pnpm` 외 다른 패키지 매니저 사용 금지
-2. Server Component를 기본으로, 필요할 때만 `"use client"` 추가
-3. `any` 타입 사용 금지
-4. 빌드/타입 오류가 있는 상태로 커밋하지 않기
+### PR 규칙
+- 모든 PR은 최소 1명의 리뷰어 승인 필요
+- QA 에이전트의 테스트 통과 필수
+- PR 제목은 이슈 번호를 포함: `[#이슈번호] 설명`
+- PR 본문에 변경 사항, 테스트 계획, 영향 범위 명시
+
+### 이슈 라벨
+- `agent:planner`, `agent:pm`, `agent:architect`, `agent:frontend-developer`, `agent:backend-developer`, `agent:developer`, `agent:evaluator`, `agent:qa`
+- `scope:frontend`, `scope:backend`, `scope:fullstack`
+- `priority:critical`, `priority:high`, `priority:medium`, `priority:low`
+- `size:s`, `size:m`, `size:l`, `size:xl`
+- `status:todo`, `status:in-progress`, `status:evaluating`, `status:qa`, `status:done`, `status:blocked`, `status:stalled`, `status:agent-failed`
+- `needs:re-review`
+- `type:feature`, `type:bug`, `type:refactor`, `type:infra`
+
+### 파이프라인
+```
+Planner → PM → Architect(설계+테스트시나리오) → Developer(적응형) → Evaluator(정적분석+코드리뷰) → QA(+E2E듀얼뷰포트) → Merge
+```
+
+### 적응형 파이프라인 (이슈 크기별)
+| 이슈 크기 | 개발 에이전트 | 파이프라인 |
+|----------|------------|----------|
+| `size:s` | Developer (Fullstack) | Architect → Developer → Evaluator → Merge |
+| `size:m` | Developer (Fullstack) | PM → Architect → Developer → Evaluator → QA → Merge |
+| `size:l` | FE Dev + BE Dev (병렬) | 전체 파이프라인 |
+| `size:xl` | FE Dev + BE Dev (병렬) | 전체 파이프라인 + Cross Validate 스킬 |
+
+### 테스트 전략: Specification-Driven Testing
+- **Architect**: 설계 문서에 테스트 시나리오 목록(자연어)을 포함한다
+- **Developer**: 시나리오를 테스트 코드로 변환 → 구현 → 통과 (테스트 우선)
+- **Evaluator**: 테스트 과적합(하드코딩/편법) 검증 + Architect 시나리오 대비 테스트 충분성 확인
+- **QA**: 모바일(480px) + 데스크톱(1200px) E2E 필수
+
+### 검증 전략: 하이브리드 (SSR + CSR)
+
+UI 프로젝트의 검증은 두 계층으로 나누어 수행한다:
+
+| 계층 | 도구 | 대상 | 단계 |
+|------|------|------|------|
+| **SSR 검증** | curl + grep | SEO 메타태그, 서버 렌더링 데이터, API 응답 | Evaluator |
+| **CSR 검증** | Playwright | 클라이언트 렌더링 콘텐츠, CSS 스타일, 이미지 로드, 반응형 | QA |
+
+- curl은 "존재 여부", Playwright는 "동작 여부"를 검증한다
+- `"use client"` 컴포넌트의 내용은 SSR HTML에 포함되지 않으므로 Playwright로만 확인 가능
+- CSS 변수(`var(--color-*)`)로 적용된 디자인 토큰은 `getComputedStyle`로 검증
+- SSR HTML에서 "404" 검색 시 Next.js RSC payload의 fallback 데이터를 제외할 것
+
+### 에이전트 간 통신 규칙
+1. **기본**: GitHub Issues/PR 코멘트를 통해 소통
+2. **폴백**: 오케스트레이터가 `.harness/state.json`을 통해 상태 동기화
+3. **긴급**: 오케스트레이터가 직접 에이전트를 호출하여 조율
+
+### 원칙 우선순위
+
+```
+사용자 명시적 지시 > 프레임워크 기본 원칙
+```
+
+- 사용자가 "레퍼런스 기반으로 변경하라"고 지시하면 프레임워크의 "기존 코드 보존" 원칙보다 사용자 지시가 우선한다
+- **예외**: 보안 취약점, 데이터 손실, 핵심 기능 마비가 예상될 때만 프레임워크 원칙이 우선 (거부가 아닌 경고 후 사용자 확인)
+
+### 모호한 지시 대응 원칙
+
+"리뉴얼", "개선", "수정" 등 범위가 넓은 지시를 받으면 **작업 전에 해석한 범위를 사용자에게 제시하고 확인**받는다.
+
+```
+모호한 지시 수신 → 범위 해석 → 사용자에게 제시 → 확인 후 작업
+```
+
+- "리뉴얼" ≠ "색상만 변경". 레퍼런스가 있으면 **레이아웃 구조 변경** 포함으로 해석
+- **보수적 해석 편향 금지**: "최소한의 변경"이 기본값이 아님
+- **기존 코드 보존 관성 금지**: 기존 코드를 패치하는 것보다 처음부터 재구축이 나은 경우를 판단
+- 확신이 없으면 3번 재작업하는 것보다 **1번 질문**하는 것이 낫다
+- 서브에이전트에게 위임 시에도 동일 원칙 적용: 변경 허용/금지 범위를 명시적으로 분리
+
+### "수정 금지" 범위의 동적 결정
+
+| 요청 유형 | 변경 허용 | 변경 금지 |
+|----------|----------|----------|
+| UI 리뉴얼/레퍼런스 | 레이아웃, 컴포넌트 구조, UX 흐름, CSS | 백엔드 API 계약, DB 스키마, 서버 로직 |
+| 기능 추가 | 새 코드 추가, 인터페이스 확장 | 기존 기능 핵심 로직 |
+| 버그 수정 | 버그 코드 블록만 | 무관한 영역 전체 |
+
+- 서브에이전트에게 작업을 위임할 때 "변경 허용 범위"와 "변경 금지 범위"를 **명시적으로 분리**하여 전달한다
+- "기존 로직 수정 금지"라는 포괄적 표현 대신 구체적으로 어떤 파일/로직을 보존할지 나열한다
+
+### 금지 사항
+- main 브랜치 직접 수정 금지
+- 다른 에이전트의 활성 브랜치에 직접 푸시 금지
+- 리뷰 없이 머지 금지
+- 테스트 없이 PR 생성 금지
