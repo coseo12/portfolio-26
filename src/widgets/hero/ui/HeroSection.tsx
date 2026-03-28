@@ -23,13 +23,20 @@ export function HeroSection() {
           loop
           playsInline
           poster={`${BASE_PATH}/hero-bg.webp`}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover xl:blur-[1px] 2xl:blur-[2px]"
           aria-hidden="true"
         >
           <source src={`${BASE_PATH}/hero.mp4`} type="video/mp4" />
         </video>
-        {/* 배경 위 어두운 오버레이 — 텍스트 가독성 확보 */}
+        {/* 오버레이: 중앙 반투명 + 가장자리 비네팅 */}
         <div className="absolute inset-0 bg-ink-900/40" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 30%, rgba(10,14,23,0.5) 70%, rgba(10,14,23,0.85) 100%)",
+          }}
+        />
       </div>
 
       {/* L2: 금빛 파티클 */}
