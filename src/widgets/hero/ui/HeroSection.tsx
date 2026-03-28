@@ -86,20 +86,25 @@ export function HeroSection() {
       {/* L2: 금빛 파티클 */}
       <GoldParticles />
 
-      {/* 중앙 텍스트 */}
-      <div className="relative z-30 flex flex-col items-center gap-4 px-4 text-center">
+      {/* 중앙 텍스트 — 반투명 백드롭으로 가독성 확보 */}
+      <div
+        className="relative z-30 flex flex-col items-center gap-4 rounded-3xl px-10 py-8 text-center md:px-16 md:py-10"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(10,14,23,0.6) 0%, rgba(10,14,23,0.3) 60%, transparent 100%)",
+        }}
+      >
         <h1 className="font-heading text-gold-gradient text-5xl font-bold leading-tight pb-1 md:text-7xl">
           {SITE_CONFIG.name}
         </h1>
-        <p className="font-serif text-xl tracking-wide text-moon md:text-2xl">
+        <p className="font-serif text-xl tracking-wide text-moon md:text-2xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
           {SITE_CONFIG.title}
         </p>
-        <p className="max-w-md text-base text-moon/80">
+        <p className="max-w-md text-base text-moon/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
           {SITE_CONFIG.description}
         </p>
         <button
           onClick={handleCtaClick}
-          className="mt-4 cursor-pointer rounded-lg border border-gold-500 px-8 py-3 text-sm font-medium text-gold-400 transition-all duration-300 hover:glow-gold hover:bg-gold-500/10"
+          className="mt-4 cursor-pointer rounded-lg border border-gold-500 bg-ink-900/60 px-8 py-3 text-sm font-medium text-gold-400 transition-all duration-300 hover:glow-gold hover:bg-gold-500/10"
         >
           프로젝트 보기
         </button>
