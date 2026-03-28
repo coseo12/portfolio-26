@@ -1,5 +1,6 @@
 "use client";
 
+import { ExternalLink } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
 import { PROJECTS } from "@/shared/config";
@@ -12,6 +13,26 @@ function TechTag({ tech }: { tech: string }) {
     <span className="bg-ink-700 text-gold-400 text-xs px-3 py-1 rounded-full font-mono">
       {tech}
     </span>
+  );
+}
+
+function ProjectLinks({ project }: { project: (typeof PROJECTS)[number] }) {
+  if (!project.demo && !project.github) return null;
+  return (
+    <div className="flex gap-3 mt-4">
+      {project.demo && (
+        <a
+          href={project.demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${project.title} 데모 (새 탭에서 열기)`}
+          className="inline-flex items-center gap-1.5 text-sm text-gold-400 hover:text-gold-300 transition-colors"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Demo
+        </a>
+      )}
+    </div>
   );
 }
 
@@ -38,6 +59,7 @@ function FeaturedProjectCard({
               <TechTag key={tech} tech={tech} />
             ))}
           </div>
+          <ProjectLinks project={project} />
         </div>
       </div>
     </div>
@@ -70,10 +92,23 @@ function RegularProjectCard({
         <p className="text-moon/60 text-sm line-clamp-2 mt-2">
           {project.description}
         </p>
-        <div className="flex flex-wrap gap-1.5 mt-3">
-          {project.techs.map((tech) => (
-            <TechTag key={tech} tech={tech} />
-          ))}
+        <div className="flex items-center justify-between mt-3">
+          <div className="flex flex-wrap gap-1.5">
+            {project.techs.map((tech) => (
+              <TechTag key={tech} tech={tech} />
+            ))}
+          </div>
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} 데모`}
+              className="text-gold-400 hover:text-gold-300 transition-colors shrink-0 ml-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          )}
         </div>
       </div>
     </div>

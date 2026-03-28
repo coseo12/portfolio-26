@@ -25,14 +25,14 @@ export function AboutSection() {
           {/* 좌측: 프로필 */}
           <div className="flex flex-col items-center gap-6 lg:items-start">
             <img
-              src={`${BASE_PATH}/_.jpeg`}
+              src={`${BASE_PATH}/me.jpeg`}
               alt={`${SITE_CONFIG.name} 프로필 사진`}
               className="h-40 w-40 rounded-full object-cover ring-2 ring-gold-500 glow-gold"
             />
             <div className="text-center lg:text-left">
               <h3 className="text-2xl font-heading text-moon">{SITE_CONFIG.name}</h3>
               <p className="text-gold-400">{SITE_CONFIG.title}</p>
-              <p className="text-moon/60">11년 5개월</p>
+              <p className="text-moon/60">11년+ 경력</p>
             </div>
 
             <div className="flex w-full flex-col gap-3">

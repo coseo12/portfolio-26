@@ -53,7 +53,7 @@ export function HeroSection() {
 
       {/* 중앙 텍스트 */}
       <div className="relative z-30 flex flex-col items-center gap-4 px-4 text-center">
-        <h1 className="font-heading text-gold-gradient text-5xl font-bold md:text-7xl">
+        <h1 className="font-heading text-gold-gradient text-5xl font-bold leading-tight pb-1 md:text-7xl">
           {SITE_CONFIG.name}
         </h1>
         <p className="font-serif text-xl tracking-wide text-moon md:text-2xl">
