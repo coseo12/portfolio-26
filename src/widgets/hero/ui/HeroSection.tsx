@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-import { SITE_CONFIG } from "@/shared/config";
+import { SITE_CONFIG, BASE_PATH } from "@/shared/config";
 import { GoldParticles } from "@/shared/ui/gold-particles";
 import { useScrollPosition } from "@/shared/lib/hooks/useScrollPosition";
 
@@ -24,7 +24,7 @@ export function HeroSection() {
         style={{ transform: `translateY(${scrollY * 0.3}px)` }}
       >
         <img
-          src="/hero-bg.webp"
+          src={`${BASE_PATH}/hero-bg.webp`}
           alt=""
           className="h-full w-full object-cover"
           aria-hidden="true"

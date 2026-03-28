@@ -1,5 +1,9 @@
 // 포트폴리오 데이터 및 설정
 
+// GitHub Pages basePath 처리
+export const BASE_PATH =
+  process.env.NODE_ENV === "production" ? "/portfolio-26" : "";
+
 export const SITE_CONFIG = {
   name: "서창오",
   title: "Frontend Developer",
@@ -104,7 +108,7 @@ export const PROJECTS = [
     description:
       "문화전시 티켓팅 플랫폼. Turborepo + Docker 기반 모노레포 환경 구축으로 빌드 시간 단축.",
     techs: ["Next.js", "TypeScript", "Turborepo", "Docker"],
-    image: "/projects/qpicker-ticket.png",
+    image: `${BASE_PATH}/projects/qpicker-ticket.png`,
     featured: true,
   },
   {
@@ -112,7 +116,7 @@ export const PROJECTS = [
     description:
       "AI 문서인식 서비스. Canvas API 기반 문서 뷰어로 이미지 회전, 확대, 크롭 기능 구현.",
     techs: ["Vue.js", "Vite", "WebGL", "Canvas API"],
-    image: "/projects/textscope.png",
+    image: `${BASE_PATH}/projects/textscope.png`,
     featured: false,
   },
   {
@@ -120,7 +124,7 @@ export const PROJECTS = [
     description:
       "화상 스트리밍 앱. WebRTC(Twilio) 기반 실시간 통신 및 Electron 데스크톱 앱.",
     techs: ["React", "Electron", "WebRTC", "Twilio"],
-    image: "/projects/pivo.png",
+    image: `${BASE_PATH}/projects/pivo.png`,
     featured: false,
   },
   {
@@ -128,10 +132,10 @@ export const PROJECTS = [
     description:
       "에너지저장장치 통합 모니터링 솔루션. 실시간 데이터 시각화 및 알림 시스템.",
     techs: ["React", "Node.js", "WebSocket"],
-    image: "/projects/ess.png",
+    image: `${BASE_PATH}/projects/ess.png`,
     featured: false,
   },
-] as const;
+];
 
 export const ABOUT_HIGHLIGHTS = [
   {

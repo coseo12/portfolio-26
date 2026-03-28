@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/shared/lib/utils";
-import { SITE_CONFIG, ABOUT_HIGHLIGHTS, CAREER_TIMELINE } from "@/shared/config";
+import { SITE_CONFIG, ABOUT_HIGHLIGHTS, CAREER_TIMELINE, BASE_PATH } from "@/shared/config";
 import { PlumBlossom } from "@/shared/ui/plum-blossom";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
 
@@ -25,7 +25,7 @@ export function AboutSection() {
           {/* 좌측: 프로필 */}
           <div className="flex flex-col items-center gap-6 lg:items-start">
             <img
-              src="/_.jpeg"
+              src={`${BASE_PATH}/_.jpeg`}
               alt={`${SITE_CONFIG.name} 프로필 사진`}
               className="h-40 w-40 rounded-full object-cover ring-2 ring-gold-500 glow-gold"
             />
