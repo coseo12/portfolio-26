@@ -93,13 +93,10 @@ export function HeroSection() {
           background: "radial-gradient(ellipse at center, rgba(10,14,23,0.6) 0%, rgba(10,14,23,0.3) 60%, transparent 100%)",
         }}
       >
-        <h1 className="font-heading text-gold-gradient text-5xl font-bold leading-tight pb-1 md:text-7xl">
-          {SITE_CONFIG.name}
-        </h1>
-        <p className="font-serif text-xl tracking-wide text-moon md:text-2xl drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+        <h1 className="font-serif text-gold-gradient text-3xl font-bold leading-tight pb-1 md:text-5xl">
           {SITE_CONFIG.title}
-        </p>
-        <p className="max-w-md text-base text-moon/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+        </h1>
+        <p className="max-w-lg text-base text-gold-gradient md:text-lg">
           {SITE_CONFIG.description}
         </p>
         <button
