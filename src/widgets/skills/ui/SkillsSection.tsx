@@ -8,6 +8,27 @@ export function SkillsSection() {
   const { ref, isVisible } = useScrollReveal();
 
   const categories = Object.entries(SKILLS) as [string, readonly string[]][];
+  const topRow = categories.slice(0, 3);
+  const bottomRow = categories.slice(3);
+
+  const renderCard = ([category, skills]: [string, readonly string[]]) => (
+    <div
+      key={category}
+      className="glass-card rounded-xl p-6 transition-all duration-300 hover:border hover:border-gold-500/50 hover:glow-gold"
+    >
+      <h3 className="mb-4 font-heading text-lg text-gold-400">{category}</h3>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((skill) => (
+          <span
+            key={skill}
+            className="rounded-full bg-ink-700 px-3 py-1 text-sm text-moon/80"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <section id="skills" className="px-6 py-24">
@@ -22,27 +43,12 @@ export function SkillsSection() {
           Skills
         </h2>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {categories.map(([category, skills]) => (
-            <div
-              key={category}
-              className="glass-card rounded-xl p-6 transition-all duration-300 hover:border hover:border-gold-500/50 hover:glow-gold"
-            >
-              <h3 className="mb-4 font-heading text-lg text-gold-400">
-                {category}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full bg-ink-700 px-3 py-1 text-sm text-moon/80"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {topRow.map(renderCard)}
+        </div>
+
+        <div className="mx-auto mt-6 grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
+          {bottomRow.map(renderCard)}
         </div>
       </div>
     </section>
