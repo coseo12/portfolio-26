@@ -2,34 +2,27 @@
 
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+import { TechBadge } from "@/shared/ui/tech-badge";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
 import { PROJECTS } from "@/shared/config";
 
 const featuredProjects = PROJECTS.filter((p) => p.featured);
 const regularProjects = PROJECTS.filter((p) => !p.featured);
 
-function TechTag({ tech }: { tech: string }) {
-  return (
-    <span className="bg-ink-700 text-gold-400 text-xs px-3 py-1 rounded-full font-mono">
-      {tech}
-    </span>
-  );
-}
-
 function ProjectLinks({ project }: { project: (typeof PROJECTS)[number] }) {
-  if (!project.demo && !project.github) return null;
+  if (!project.link && !project.github) return null;
   return (
     <div className="flex gap-3 mt-4">
-      {project.demo && (
+      {project.link && (
         <a
-          href={project.demo}
+          href={project.link}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${project.title} 데모 (새 탭에서 열기)`}
+          aria-label={`${project.title} 사이트 (새 탭에서 열기)`}
           className="inline-flex items-center gap-1.5 text-sm text-gold-400 hover:text-gold-300 transition-colors"
         >
           <ExternalLink className="w-4 h-4" />
-          Demo
+          바로가기
         </a>
       )}
     </div>
@@ -56,7 +49,7 @@ function FeaturedProjectCard({
           </p>
           <div className="flex flex-wrap gap-2 mt-4">
             {project.techs.map((tech) => (
-              <TechTag key={tech} tech={tech} />
+              <TechBadge key={tech} name={tech} />
             ))}
           </div>
           <ProjectLinks project={project} />
@@ -82,7 +75,7 @@ function RegularProjectCard({
         <div className="absolute inset-0 bg-ink-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <div className="flex flex-wrap gap-2 justify-center px-4">
             {project.techs.map((tech) => (
-              <TechTag key={tech} tech={tech} />
+              <TechBadge key={tech} name={tech} />
             ))}
           </div>
         </div>
@@ -95,15 +88,15 @@ function RegularProjectCard({
         <div className="flex items-center justify-between mt-3">
           <div className="flex flex-wrap gap-1.5">
             {project.techs.map((tech) => (
-              <TechTag key={tech} tech={tech} />
+              <TechBadge key={tech} name={tech} />
             ))}
           </div>
-          {project.demo && (
+          {project.link && (
             <a
-              href={project.demo}
+              href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${project.title} 데모`}
+              aria-label={`${project.title} 바로가기`}
               className="text-gold-400 hover:text-gold-300 transition-colors shrink-0 ml-2"
             >
               <ExternalLink className="w-4 h-4" />
