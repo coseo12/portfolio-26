@@ -73,33 +73,14 @@ export const CAREER_TIMELINE = [
   },
 ] as const;
 
+export const GITHUB_USERNAME = "coseo12";
+
 export const SKILLS = {
-  Frontend: [
-    "React",
-    "Next.js",
-    "TypeScript",
-    "Vue.js",
-    "HTML5",
-    "CSS3",
-    "Canvas API",
-    "Electron",
-    "WebRTC",
-  ],
-  "Backend & DB": [
-    "Node.js",
-    "Spring",
-    "MySQL",
-    "PostgreSQL",
-    "MariaDB",
-    "MongoDB",
-  ],
-  "DevOps & Tools": ["Turborepo", "Docker", "Git", "Vite", "RESTful API"],
-  "AI & Specialized": [
-    "LangChain",
-    "OpenAI API",
-    "OCR",
-    "Web Audio API",
-  ],
+  Languages: ["TypeScript", "JavaScript", "Go", "Rust", "Python"],
+  Frontend: ["React", "Vue.js", "Next.js"],
+  Backend: ["Node.js", "NestJS", "GraphQL"],
+  Specialized: ["WebGL", "WebRTC", "WebAssembly", "Electron", "Docker"],
+  AI: ["LangChain", "CrewAI"],
 } as const;
 
 export const PROJECTS = [

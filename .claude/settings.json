@@ -5,6 +5,6 @@
     "HARNESS_STATE_DIR": ".harness"
   },
   "permissions": {
-    "defaultMode": "bypassPermissions"
+    "defaultMode": "auto"
   }
 }
