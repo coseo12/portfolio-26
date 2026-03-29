@@ -142,4 +142,14 @@ export const ABOUT_HIGHLIGHTS = [
     description:
       "단순한 AI 도구 사용을 넘어, AI 에이전트 프레임워크를 직접 설계하고 활용합니다. LLM과 API를 결합해 복잡한 문제를 주도적으로 해결합니다.",
   },
+  {
+    title: "도메인 횡단 적응력",
+    description:
+      "제조, 에너지, 헬스케어, 문화전시까지 — 다양한 산업 도메인에서 핵심 시스템을 구축한 경험이 새로운 비즈니스 요구사항을 빠르게 이해하고 설계로 옮기는 힘이 됩니다.",
+  },
+  {
+    title: "브라우저 딥 다이브",
+    description:
+      "WebGL, WebRTC, Canvas API, Web Audio 등 브라우저 저수준 API를 실무에서 직접 다뤘습니다. 프레임워크 너머의 플랫폼을 이해하기에 한계 없이 구현합니다.",
+  },
 ] as const;
