@@ -1,12 +1,30 @@
 "use client";
 
 import { cn } from "@/shared/lib/utils";
-import { SKILLS } from "@/shared/config";
+import { SKILLS, GITHUB_USERNAME } from "@/shared/config";
 import { TechBadge } from "@/shared/ui/tech-badge";
+import { GoldenWave } from "@/shared/ui/golden-wave";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
+import { useGitHubStats } from "@/widgets/github-stats/lib/useGitHubStats";
+import { StatsCard } from "@/widgets/github-stats/ui/StatsCard";
+import { TopLanguagesCard } from "@/widgets/github-stats/ui/TopLanguagesCard";
+
+function SkeletonCard() {
+  return (
+    <div className="glass-card animate-pulse rounded-xl p-6">
+      <div className="mb-6 h-6 w-24 rounded bg-gold-500/20" />
+      <div className="space-y-4">
+        <div className="h-4 w-full rounded bg-gold-500/10" />
+        <div className="h-4 w-3/4 rounded bg-gold-500/10" />
+        <div className="h-4 w-1/2 rounded bg-gold-500/10" />
+      </div>
+    </div>
+  );
+}
 
 export function SkillsSection() {
   const { ref, isVisible } = useScrollReveal();
+  const { stats, loading, error } = useGitHubStats(GITHUB_USERNAME);
 
   const categories = Object.entries(SKILLS) as [string, readonly string[]][];
 
@@ -20,7 +38,7 @@ export function SkillsSection() {
         )}
       >
         <h2 className="mb-16 text-center font-heading text-3xl text-gold-gradient md:text-4xl">
-          Skills
+          Skills & GitHub
         </h2>
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
@@ -40,6 +58,27 @@ export function SkillsSection() {
             </div>
           ))}
         </div>
+
+        {/* GitHub Stats */}
+        {!error && (
+          <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-6 lg:grid-cols-2">
+            {loading || !stats ? (
+              <>
+                <SkeletonCard />
+                <SkeletonCard />
+              </>
+            ) : (
+              <>
+                <StatsCard stats={stats} />
+                <TopLanguagesCard languages={stats.topLanguages} />
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="mx-auto mt-16 max-w-6xl">
+        <GoldenWave />
       </div>
     </section>
   );

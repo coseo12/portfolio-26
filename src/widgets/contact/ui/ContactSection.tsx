@@ -2,6 +2,7 @@
 
 import { Mail, MapPin } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+import { GoldParticles } from "@/shared/ui/gold-particles";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
 import { SITE_CONFIG } from "@/shared/config";
 
@@ -43,13 +44,14 @@ export function ContactSection() {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section id="contact" className="bg-ink-900 pb-12">
+    <section id="contact" className="relative min-h-screen overflow-hidden bg-ink-900">
+      <GoldParticles subtle />
       <div className="ink-fade-bottom h-24" />
 
       <div
         ref={ref}
         className={cn(
-          "max-w-4xl mx-auto px-4 transition-all duration-700",
+          "flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center max-w-4xl mx-auto px-4 transition-all duration-700",
           isVisible
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-8"
