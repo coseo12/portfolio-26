@@ -2,33 +2,13 @@
 
 import { cn } from "@/shared/lib/utils";
 import { SKILLS } from "@/shared/config";
+import { TechBadge } from "@/shared/ui/tech-badge";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
 
 export function SkillsSection() {
   const { ref, isVisible } = useScrollReveal();
 
   const categories = Object.entries(SKILLS) as [string, readonly string[]][];
-  const topRow = categories.slice(0, 3);
-  const bottomRow = categories.slice(3);
-
-  const renderCard = ([category, skills]: [string, readonly string[]]) => (
-    <div
-      key={category}
-      className="glass-card rounded-xl p-6 transition-all duration-300 hover:border hover:border-gold-500/50 hover:glow-gold"
-    >
-      <h3 className="mb-4 font-heading text-lg text-gold-400">{category}</h3>
-      <div className="flex flex-wrap gap-2">
-        {skills.map((skill) => (
-          <span
-            key={skill}
-            className="rounded-full bg-ink-700 px-3 py-1 text-sm text-moon/80"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <section id="skills" className="px-6 py-24">
@@ -43,12 +23,22 @@ export function SkillsSection() {
           Skills
         </h2>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {topRow.map(renderCard)}
-        </div>
-
-        <div className="mx-auto mt-6 grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
-          {bottomRow.map(renderCard)}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+          {categories.map(([category, skills]) => (
+            <div
+              key={category}
+              className="glass-card rounded-xl p-5 transition-all duration-300 hover:border hover:border-gold-500/50 hover:glow-gold"
+            >
+              <h3 className="mb-3 font-heading text-base text-gold-400">
+                {category}
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {skills.map((skill) => (
+                  <TechBadge key={skill} name={skill} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
