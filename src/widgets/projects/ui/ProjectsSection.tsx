@@ -3,6 +3,7 @@
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { TechBadge } from "@/shared/ui/tech-badge";
+import { Bamboo } from "@/shared/ui/bamboo";
 import { useScrollReveal } from "@/shared/lib/hooks/useScrollReveal";
 import { PROJECTS } from "@/shared/config";
 
@@ -138,6 +139,10 @@ export function ProjectsSection() {
           {regularProjects.map((project) => (
             <RegularProjectCard key={project.title} project={project} />
           ))}
+        </div>
+
+        <div className="mt-16">
+          <Bamboo />
         </div>
       </div>
     </section>

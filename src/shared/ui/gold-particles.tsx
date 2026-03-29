@@ -6,6 +6,8 @@ import { cn } from "@/shared/lib/utils";
 const GOLD_COLORS = ["#d4a853", "#e8c874", "#f0dca0"];
 const DESKTOP_COUNT = 80;
 const TABLET_COUNT = 30;
+const DESKTOP_COUNT_SUBTLE = 25;
+const TABLET_COUNT_SUBTLE = 15;
 const MOBILE_BREAKPOINT = 480;
 const TABLET_BREAKPOINT = 768;
 
@@ -39,9 +41,11 @@ function createParticle(width: number, height: number): Particle {
 
 interface GoldParticlesProps {
   className?: string;
+  /** 파티클 수를 줄여 은은하게 표시 */
+  subtle?: boolean;
 }
 
-export function GoldParticles({ className }: GoldParticlesProps) {
+export function GoldParticles({ className, subtle = false }: GoldParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const particlesRef = useRef<Particle[]>([]);
@@ -53,7 +57,9 @@ export function GoldParticles({ className }: GoldParticlesProps) {
       return;
     }
 
-    const count = width <= TABLET_BREAKPOINT ? TABLET_COUNT : DESKTOP_COUNT;
+    const desktopCount = subtle ? DESKTOP_COUNT_SUBTLE : DESKTOP_COUNT;
+    const tabletCount = subtle ? TABLET_COUNT_SUBTLE : TABLET_COUNT;
+    const count = width <= TABLET_BREAKPOINT ? tabletCount : desktopCount;
     particlesRef.current = Array.from({ length: count }, () =>
       createParticle(width, height)
     );
