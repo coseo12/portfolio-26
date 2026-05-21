@@ -22,7 +22,7 @@ const TECH_COLORS: Record<string, string> = {
   Docker: "#2496ED",
   // AI
   "Claude Code": "#D97757",
-  "Gemini CLI": "#8B6CF6",
+  "Antigravity CLI": "#5B8DEF",
   LangChain: "#2DA882",
   CrewAI: "#FF6B35",
   "OpenAI API": "#10A37F",

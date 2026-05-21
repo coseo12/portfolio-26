@@ -10,7 +10,7 @@
 | `run-tests` | 테스트 자동 감지 + 실행 | Developer, QA |
 | `sync-status` | 에이전트 간 상태 동기화 | 전체 |
 | `create-skill` | 새 스킬 생성 + 평가 | Skill Creator |
-| `cross-validate` | Gemini 교차검증 | Cross Validator |
+| `cross-validate` | Antigravity CLI(agy) 교차검증 | Cross Validator |
 | `fix-error` | CI/QA 실패 수정 | Developer |
 | `resolve-conflict` | 머지 충돌 해결 | Developer |
 | `static-analysis` | 린트/보안 스캔 | Auditor |
