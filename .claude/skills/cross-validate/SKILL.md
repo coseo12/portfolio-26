@@ -1,27 +1,28 @@
 ---
 name: cross-validate
 description: |
-  Gemini CLI를 활용하여 코드, 설계, 스킬, 구조를 교차검증하는 스킬.
+  Antigravity CLI(agy)를 활용하여 코드, 설계, 스킬, 구조를 교차검증하는 스킬.
+  (Gemini CLI는 2026-06-18부로 종료되어 Antigravity 플랫폼 CLI로 대체됨)
   TRIGGER when: 교차검증이 필요할 때, "검증해줘", "cross-validate", "교차 리뷰",
-  "gemini로 확인", "다른 시각", "두 번째 의견", 설계 리뷰, PR의 독립적 검토,
-  스킬 품질 검증, 프레임워크 구조 점검이 필요할 때.
+  "agy로 확인", "antigravity로 확인", "다른 시각", "두 번째 의견", 설계 리뷰,
+  PR의 독립적 검토, 스킬 품질 검증, 프레임워크 구조 점검이 필요할 때.
   DO NOT TRIGGER when: 일반 코드 리뷰, 테스트 실행,
-  Gemini와 무관한 작업일 때.
+  외부 교차검증 도구와 무관한 작업일 때.
 ---
 
 # 교차검증
 
-Gemini CLI를 외부 검증 도구로 활용하여 산출물을 독립적으로 검증한다.
-Claude와 Gemini의 이중 시각으로 단일 모델 편향을 방지한다.
+Antigravity CLI(`agy`)를 외부 검증 도구로 활용하여 산출물을 독립적으로 검증한다.
+Claude와 Antigravity CLI의 이중 시각으로 단일 모델 편향을 방지한다.
 
 ## 사전 조건
 
 ```bash
-# Gemini CLI 설치 확인
-command -v gemini || echo "gemini CLI 미설치"
+# Antigravity CLI 설치 확인
+command -v agy || echo "agy CLI 미설치"
 
 # 인증 확인
-gemini -p "hello" --approval-mode plan 2>&1 | head -3
+agy -p "hello" --sandbox 2>&1 | head -3
 ```
 
 ## 검증 유형
@@ -31,8 +32,8 @@ gemini -p "hello" --approval-mode plan 2>&1 | head -3
 Architect 산출물을 검증한다.
 
 ```bash
-# 설계 문서를 Gemini에 전달
-gemini -p "$(cat <<'PROMPT'
+# 설계 문서를 Antigravity CLI에 전달
+agy -p "$(cat <<'PROMPT'
 당신은 소프트웨어 아키텍처 리뷰어입니다.
 아래 설계 문서를 검증해주세요.
 
@@ -45,7 +46,7 @@ gemini -p "$(cat <<'PROMPT'
 
 한국어로 항목별 평가와 개선 제안을 해주세요.
 PROMPT
-)" --approval-mode plan
+)" --sandbox
 ```
 
 ### 2. 코드 검증 (code)
@@ -53,10 +54,10 @@ PROMPT
 PR의 변경 사항을 검증한다.
 
 ```bash
-# PR diff를 Gemini에 전달
+# PR diff를 Antigravity CLI에 전달
 DIFF=$(gh pr diff <PR번호>)
 
-gemini -p "$(cat <<PROMPT
+agy -p "$(cat <<PROMPT
 당신은 시니어 코드 리뷰어입니다.
 아래 코드 변경사항을 리뷰해주세요.
 
@@ -72,7 +73,7 @@ ${DIFF}
 
 한국어로 항목별 평가와 구체적 개선 제안을 해주세요.
 PROMPT
-)" --approval-mode plan
+)" --sandbox
 ```
 
 ### 3. 스킬 검증 (skill)
@@ -82,7 +83,7 @@ PROMPT
 ```bash
 SKILL_CONTENT=$(cat .claude/skills/<스킬명>/SKILL.md)
 
-gemini -p "$(cat <<PROMPT
+agy -p "$(cat <<PROMPT
 당신은 Claude Code 스킬 검증자입니다.
 아래 스킬을 검증해주세요.
 
@@ -98,7 +99,7 @@ ${SKILL_CONTENT}
 
 한국어로 항목별 평가와 개선 제안을 해주세요.
 PROMPT
-)" --approval-mode plan
+)" --sandbox
 ```
 
 ### 4. 구조 검증 (structure)
@@ -106,7 +107,7 @@ PROMPT
 프로젝트 전체 구조를 검증한다.
 
 ```bash
-gemini -p "$(cat <<'PROMPT'
+agy -p "$(cat <<'PROMPT'
 당신은 소프트웨어 아키텍처 리뷰어입니다.
 이 저장소의 전체 구조를 검증해주세요.
 
@@ -120,7 +121,7 @@ gemini -p "$(cat <<'PROMPT'
 
 한국어로 답변해주세요.
 PROMPT
-)" --approval-mode plan
+)" --sandbox
 ```
 
 ## 실행 스크립트
@@ -143,12 +144,12 @@ PROMPT
 
 ## 결과 분석
 
-Gemini 응답을 받은 후 Claude가 수행하는 분석:
+Antigravity CLI 응답을 받은 후 Claude가 수행하는 분석:
 
 1. **합의 항목 식별**: 두 모델이 동의하는 문제 → 높은 신뢰도
 2. **이견 항목 식별**: 두 모델이 다른 의견 → 양쪽 근거 제시
-3. **Gemini 고유 발견**: Claude가 놓친 문제 → 추가 검토
-4. **오탐 필터링**: Gemini의 잘못된 지적 → 근거와 함께 기각
+3. **Antigravity CLI 고유 발견**: Claude가 놓친 문제 → 추가 검토
+4. **오탐 필터링**: Antigravity CLI의 잘못된 지적 → 근거와 함께 기각
 
 ## 결과 보고 형식
 
@@ -159,7 +160,7 @@ Gemini 응답을 받은 후 Claude가 수행하는 분석:
 - 유형: [architecture/code/skill/structure]
 - 대상: [파일 또는 PR 번호]
 
-### Gemini 피드백 요약
+### Antigravity CLI 피드백 요약
 | 항목 | 평가 | 상세 |
 |------|------|------|
 | ... | 양호/주의/위험 | ... |
@@ -180,8 +181,8 @@ Gemini 응답을 받은 후 Claude가 수행하는 분석:
 
 ## 규칙
 
-- Gemini는 항상 `--approval-mode plan` (읽기 전용)으로 실행한다. 코드 변경을 허용하지 않는다.
-- Gemini 출력을 맹목적으로 수용하지 않는다. Claude가 반드시 재분석한다.
+- Antigravity CLI는 항상 `--sandbox` (터미널 제한)로 실행한다. 코드 변경을 허용하지 않는다.
+- Antigravity CLI 출력을 맹목적으로 수용하지 않는다. Claude가 반드시 재분석한다.
 - 검증 결과는 로그 파일에 기록한다.
-- 민감한 정보(시크릿, 인증 토큰)가 포함된 파일은 Gemini에 전달하지 않는다.
+- 민감한 정보(시크릿, 인증 토큰)가 포함된 파일은 Antigravity CLI에 전달하지 않는다.
 - 두 모델의 합의된 문제는 우선적으로 해결한다.

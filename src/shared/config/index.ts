@@ -80,7 +80,7 @@ export const SKILLS = {
   Frontend: ["React", "Vue.js", "Next.js"],
   Backend: ["Node.js", "NestJS", "GraphQL"],
   Specialized: ["WebGL", "WebRTC", "WebAssembly", "Electron", "Docker"],
-  AI: ["Claude Code", "Gemini CLI", "LangChain", "CrewAI", "OpenAI API"],
+  AI: ["Claude Code", "Antigravity CLI", "LangChain", "CrewAI", "OpenAI API"],
 } as const;
 
 export const PROJECTS = [
@@ -130,7 +130,7 @@ export const ABOUT_HIGHLIGHTS = [
   {
     title: "AI-Driven 생산성",
     description:
-      "Claude Code, Gemini CLI 등 AI 에이전트를 개발 워크플로우에 깊이 통합합니다. 반복 작업을 자동화하고 아키텍처 설계에 집중하여 압도적인 개발 속도를 냅니다.",
+      "Claude Code, Antigravity CLI 등 AI 에이전트를 개발 워크플로우에 깊이 통합합니다. 반복 작업을 자동화하고 아키텍처 설계에 집중하여 압도적인 개발 속도를 냅니다.",
   },
   {
     title: "견고한 설계",

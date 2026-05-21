@@ -78,8 +78,9 @@ AI가 생성하는 코드에서 반복되는 실패 패턴:
 
 ## 교차검증 (cross-validate)
 
-정답이 없는 의사결정에서 Gemini의 두 번째 시각을 활용한다.
-- Gemini 실패 시 스킵하고 "Claude 단독 분석"을 명시한다
+정답이 없는 의사결정에서 Antigravity CLI의 두 번째 시각을 활용한다.
+(Gemini CLI는 2026-06-18부로 종료되어 Antigravity 플랫폼 CLI로 대체됨)
+- Antigravity CLI 실패 시 스킵하고 "Claude 단독 분석"을 명시한다
 - 경량 모델 폴백은 하지 않는다 — 교차검증의 가치는 깊은 분석에 있다
 
 ---

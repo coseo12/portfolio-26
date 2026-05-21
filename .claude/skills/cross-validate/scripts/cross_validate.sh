@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Gemini CLI를 활용한 교차검증 스크립트
+# Antigravity CLI(agy)를 활용한 교차검증 스크립트
+# (Gemini CLI는 2026-06-18부로 종료되어 Antigravity 플랫폼 CLI로 대체됨)
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -26,9 +27,9 @@ usage() {
   exit 1
 }
 
-# Gemini CLI 확인
-if ! command -v gemini &> /dev/null; then
-  echo "에러: gemini CLI가 설치되어 있지 않습니다."
+# Antigravity CLI 확인
+if ! command -v agy &> /dev/null; then
+  echo "에러: agy CLI가 설치되어 있지 않습니다."
   exit 1
 fi
 
@@ -44,41 +45,38 @@ log() {
   echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] $*" | tee -a "${LOG_FILE}"
 }
 
-# Gemini 모델 폴백 순서
-GEMINI_MODELS=("${GEMINI_MODEL:-gemini-2.5-pro}" "gemini-2.5-flash" "gemini-2.0-flash")
-MAX_GEMINI_RETRIES=3
+# Antigravity CLI 재시도 횟수
+# (agy는 모델 선택 플래그를 노출하지 않으므로 모델 폴백 로직은 제거됨)
+MAX_AGY_RETRIES=3
 
-# Gemini 실행 (읽기 전용, 재시도 + 모델 폴백)
-run_gemini() {
+# Antigravity CLI 실행 (읽기 전용 sandbox, 재시도)
+run_agy() {
   local prompt="$1"
 
-  for model in "${GEMINI_MODELS[@]}"; do
-    local attempt=1
-    while [ "${attempt}" -le "${MAX_GEMINI_RETRIES}" ]; do
-      log "Gemini 실행 중 (모델: ${model}, 시도: ${attempt}/${MAX_GEMINI_RETRIES})..."
-      local output
-      output=$(gemini -m "${model}" -p "${prompt}" --approval-mode plan 2>&1) && {
-        echo "${output}" | tee -a "${LOG_FILE}"
-        return 0
-      }
+  local attempt=1
+  while [ "${attempt}" -le "${MAX_AGY_RETRIES}" ]; do
+    log "Antigravity CLI 실행 중 (시도: ${attempt}/${MAX_AGY_RETRIES})..."
+    local output
+    output=$(agy -p "${prompt}" --sandbox 2>&1) && {
+      echo "${output}" | tee -a "${LOG_FILE}"
+      return 0
+    }
 
-      # 429/5xx 에러인지 확인
-      if echo "${output}" | grep -qE "RESOURCE_EXHAUSTED|429|503|500"; then
-        log "경고: ${model} 용량 부족 (시도 ${attempt}/${MAX_GEMINI_RETRIES})"
-        attempt=$((attempt + 1))
-        sleep $((attempt * 5))
-      else
-        # 다른 에러면 로그 남기고 다음 모델로
-        log "경고: ${model} 실패 — $(echo "${output}" | head -3)"
-        echo "${output}" >> "${LOG_FILE}"
-        break
-      fi
-    done
-    log "모델 ${model} 실패 → 다음 모델로 폴백"
+    # 429/5xx 등 일시적 에러는 재시도
+    if echo "${output}" | grep -qE "RESOURCE_EXHAUSTED|429|503|500|timeout"; then
+      log "경고: 일시적 오류 발생 (시도 ${attempt}/${MAX_AGY_RETRIES})"
+      attempt=$((attempt + 1))
+      sleep $((attempt * 5))
+    else
+      # 그 외 에러는 즉시 중단
+      log "에러: agy 실패 — $(echo "${output}" | head -3)"
+      echo "${output}" >> "${LOG_FILE}"
+      break
+    fi
   done
 
-  log "에러: 모든 Gemini 모델이 실패했습니다."
-  echo "교차검증 스킵: Gemini API 사용 불가. 수동 검증을 진행하세요." | tee -a "${LOG_FILE}"
+  log "에러: Antigravity CLI 실행이 실패했습니다."
+  echo "교차검증 스킵: Antigravity CLI 사용 불가. 수동 검증을 진행하세요." | tee -a "${LOG_FILE}"
   return 1
 }
 
@@ -114,7 +112,7 @@ case "${TYPE}" in
 한국어로 답변해주세요.
 PROMPT_END
 )"
-    run_gemini "${PROMPT}"
+    run_agy "${PROMPT}"
     ;;
 
   code)
@@ -133,7 +131,7 @@ PROMPT_END
       exit 1
     fi
 
-    # diff 크기 제한 (Gemini 컨텍스트 보호)
+    # diff 크기 제한 (Antigravity CLI 컨텍스트 보호)
     DIFF_LINES=$(echo "${DIFF}" | wc -l)
     if [ "${DIFF_LINES}" -gt 2000 ]; then
       log "경고: diff가 ${DIFF_LINES}줄로 큼. 처음 2000줄만 전달합니다."
@@ -166,7 +164,7 @@ ${DIFF}
 한국어로 항목별 평가(양호/주의/위험)와 구체적 개선 제안을 해주세요.
 PROMPT_END
 )"
-    run_gemini "${PROMPT}"
+    run_agy "${PROMPT}"
     ;;
 
   architecture)
@@ -208,7 +206,7 @@ ${DOC_CONTENT}
 한국어로 항목별 평가와 개선 제안을 해주세요.
 PROMPT_END
 )"
-    run_gemini "${PROMPT}"
+    run_agy "${PROMPT}"
     ;;
 
   skill)
@@ -259,7 +257,7 @@ ${EVALS_INFO}
 한국어로 항목별 평가와 개선 제안을 해주세요.
 PROMPT_END
 )"
-    run_gemini "${PROMPT}"
+    run_agy "${PROMPT}"
     ;;
 
   *)

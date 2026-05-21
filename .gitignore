@@ -43,5 +43,8 @@ next-env.d.ts
 # Harness
 .harness/
 
+# Antigravity CLI (agy) 로컬 세션 디렉토리
+.antigravitycli/
+
 # 브라우저 테스트 스크린샷
 docs/plans/*.png
