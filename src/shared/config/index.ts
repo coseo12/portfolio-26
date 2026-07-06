@@ -18,6 +18,7 @@ export const NAV_ITEMS = [
   { label: "About", href: "#about" },
   { label: "Skills & GitHub", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Side Project", href: "#side-project" },
   { label: "Contact", href: "#contact" },
 ] as const;
 
@@ -125,6 +126,59 @@ export const PROJECTS = [
     featured: false,
   },
 ];
+
+// 개인 프로젝트 스포트라이트 — 실무 프로젝트(PROJECTS)와 분리하여 단독 소개
+export const SIDE_PROJECT = {
+  label: "Side Project",
+  title: "Astro Simulator",
+  tagline:
+    "태양계부터 관측 가능 우주까지 — WebGPU 기반 멀티스케일 천체물리 시뮬레이터",
+  description:
+    "Babylon.js WebGPU 파이프라인 위에 5가지 물리 엔진을 직접 구현하고, 장면 규모에 따라 자동 전환되도록 설계한 개인 프로젝트입니다. 브라우저 저수준 API 역량과 AI 에이전트 기반 개발 워크플로우를 결합해 혼자서 완성했습니다.",
+  image: `${BASE_PATH}/projects/astro-simulator.webp`,
+  demo: "https://astro-simulator-web.vercel.app/ko",
+  github: "https://github.com/coseo12/astro-simulator",
+  techs: ["Babylon.js", "WebGPU", "TypeScript", "Rust", "Next.js", "Zustand"],
+  metrics: [
+    {
+      value: "32",
+      label: "시뮬레이션 천체",
+      detail: "태양 · 8행성 · 15위성 · 왜소행성 · 혜성",
+    },
+    {
+      value: "5",
+      label: "물리 엔진 모드",
+      detail: "Kepler · N-body · Barnes-Hut · GPU · Auto",
+    },
+    {
+      value: "WebGPU",
+      label: "렌더 파이프라인",
+      detail: "compute shader + WebGL2 폴백",
+    },
+  ],
+  features: [
+    {
+      title: "물리 엔진 자동 전환",
+      description:
+        "Kepler 해석해, Newton N-body, Barnes-Hut octree, WebGPU compute shader를 직접 구현하고 장면 규모에 따라 최적 엔진을 자동 선택합니다.",
+    },
+    {
+      title: "멀티스케일 카메라",
+      description:
+        "지구 표면에서 해왕성 30 AU 너머까지, 스케일 연속성을 유지하는 자유 시점(WASD) 우주 탐험을 제공합니다.",
+    },
+    {
+      title: "정밀 시간 제어",
+      description:
+        "재생·역행, ×1일/×1년 프리셋 속도, 줄리안 날짜(JD) 기반 정밀 시점 점프로 천체 운동을 관찰합니다.",
+    },
+    {
+      title: "절차적 우주 환경",
+      description:
+        "별 배경과 은하수를 절차적으로 생성하고, 토성·천왕성·해왕성의 고리와 위성 궤도를 개별 스케일로 시각화합니다.",
+    },
+  ],
+} as const;
 
 export const ABOUT_HIGHLIGHTS = [
   {

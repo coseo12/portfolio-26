@@ -32,6 +32,10 @@ const TECH_COLORS: Record<string, string> = {
   "Canvas API": "#E44D26",
   Twilio: "#F22F46",
   WebSocket: "#4A90D9",
+  // Side Project에서 사용하는 추가 기술
+  "Babylon.js": "#BB464B",
+  WebGPU: "#005A9C",
+  Zustand: "#8B6F47",
 };
 
 interface TechBadgeProps {
