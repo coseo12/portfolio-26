@@ -3,6 +3,7 @@ import { HeroSection } from "@/widgets/hero/ui";
 import { AboutSection } from "@/widgets/about/ui";
 import { SkillsSection } from "@/widgets/skills/ui";
 import { ProjectsSection } from "@/widgets/projects/ui";
+import { SideProjectSection } from "@/widgets/side-project/ui";
 import { ContactSection } from "@/widgets/contact/ui";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <AboutSection />
         <SkillsSection />
         <ProjectsSection />
+        <SideProjectSection />
         <ContactSection />
       </main>
     </>
