@@ -71,7 +71,7 @@ export function GoldParticles({ className, subtle = false }: GoldParticlesProps)
         p.opacity = p.maxOpacity * 0.5;
       });
     }
-  }, []);
+  }, [subtle]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
